@@ -16,11 +16,15 @@ class MyUserManager(BaseUserManager):
         if not codeSecteur:
             raise ValueError("codeSecteur requis")
         
+        secteur, __ = Secteur.objects.get_or_create(
+            codeSecteur=codeSecteur, defaults={'nomSecteur': codeSecteur}
+        )
+        
         user=self.model(
             prenom = prenom,
             nom = nom,
             matricule = matricule,
-            codeSecteur = codeSecteur
+            codeSecteur = secteur
         )
         user.set_password(password)
         user.save()
