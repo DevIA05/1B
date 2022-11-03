@@ -31,4 +31,5 @@ urlpatterns = [
     path('p2', views.page2, name="p2"),
     path('p3', views.page3, name="p3"),
     path('appSuperUser/', include("appSuperUser.urls")),
+    path('quiz/login', include('identification.urls')),
 ]
