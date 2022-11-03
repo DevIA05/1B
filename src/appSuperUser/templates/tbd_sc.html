@@ -1,35 +1,33 @@
-<!DOCTYPE html>
-<html lang="fr">
+{% extends 'navbar2.html' %}
 
-<body>
-    {% extends 'navbar.html' %}
-
-    {% block mymessage %}
-    d
+{% block mymessage %}
     <section>
-
-        <div class="session1">
-            <h1> Session 1 </h1>
-            <div class="datExp"> Date expiration </div>
-            <div id="timer"> Timer </div>
-            <a href="https://www.youtube.com">
-                <button type="button" class="btn btn-primary">supprimer</button>
-                </a> 
-        </div>
-
         <div class="container">
-            <h1> Session 2 </h1>
-        </div>
+            <div class="row">
+                <div class="col-lg bg-secondary bg-gradient text-white" id ="c1"><h1> Session 1 </h1> </div>
+                <div class="col-md-2 bg-success bg-gradient text-white" id="c2"> Date expiration </div>
+                <div class="col-md-2 timer bg-dark bg-gradient text-white" id="c3"> Timer </div>
+                <a class="col-sm-1 btn btn-primary" href="#" role="button">effacer</a>
+            </div>
 
-        <div class="container">
-            <h1> Session 3 </h1>
-        </div>
+            <div class="row">
+                <div class="col-lg bg-secondary bg-gradient text-white" id ="c1"><h1> Session 2 </h1> </div>
+                <div class="col-md-2 bg-success bg-gradient text-white" id="c2"> Date expiration </div>
+                <div class="col-md-2 timer bg-dark bg-gradient text-white" id="c3"> Timer </div>
+                <a class="col-sm-1 btn btn-primary" href="#" role="button">effacer</a>
+            </div>
 
+            <div class="row">
+                <div class="col-lg bg-secondary bg-gradient text-white" id ="c1"><h1> Session 3 </h1> </div>
+                <div class="col-md-2 bg-success bg-gradient text-white" id="c2"> Date expiration </div>
+                <div class="col-md-2 timer bg-dark bg-gradient text-white" id="c3"> Timer </div>
+                <a class="col-sm-1 btn btn-primary" href="#" role="button">effacer</a>
+            </div>
+        </div>
 
     </section>
 
+    
 
 
-    {% endblock %}          
-</body>
-</html>
+{% endblock %}
