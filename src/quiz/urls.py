@@ -22,12 +22,13 @@ from . import views
 handler404 = 'quiz.views.redirectPNF'
 
 urlpatterns = [
-    path('', include("intranet.urls")),
+    path('intranet/', include("intranet.urls")),
     path('admin/', admin.site.urls),
-        path('quiz/home', views.home, name="home"),
+    path('quiz/home', views.home, name="home"),
     path('quiz', include('django.contrib.auth.urls')),
     path('quiz/', include('identification.urls')),
     path('p1', views.page1, name="p1"),
     path('p2', views.page2, name="p2"),
     path('p3', views.page3, name="p3"),
+    path('appSuperUser/', include("appSuperUser.urls")),
 ]
