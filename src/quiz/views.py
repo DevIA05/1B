@@ -7,11 +7,11 @@ def home(request):
 
 @login_required
 def page1(request):
-    return render(request, 'quiz/p1.html', {})
+    return render(request, 'p1.html', {})
 
 @login_required
 def page2(request):
-    return render(request, 'quiz/p2.html', {})
+    return render(request, 'p2.html', {})
 
 def redirectPNF(request, exception):
     return redirect('home')
