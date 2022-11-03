@@ -44,6 +44,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'identification',
+    'quiz'
 ]
 
 MIDDLEWARE = [
@@ -78,7 +79,7 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 
 
 # Database
-AUTH_USER_MODEL="identification.Personnel"
+AUTH_USER_MODEL="quiz.Personnel"
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 DATABASES = {
@@ -127,6 +128,10 @@ STATIC_URL = 'static/'
 # STATICFILES_DIRS = [  call static file outside app
 #     os.path.join(BASE_DIR, "quiz/static")
 # ]
+
+FIXTURE_DIRS = [
+    os.path.join(BASE_DIR, "quiz/data"), 
+]
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field

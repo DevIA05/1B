@@ -66,3 +66,15 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
     
     class Meta:
         db_table = "Personnel"
+
+
+class Collaborateur(models.Model):
+    matricule = models.OneToOneField('Personnel', models.DO_NOTHING, db_column='matricule', primary_key=True)
+
+    class Meta: db_table = 'Collaborateur'
+
+class Superuser(models.Model):
+    matricule = models.OneToOneField(Personnel, models.DO_NOTHING, db_column='matricule', primary_key=True)
+    role = models.BooleanField()
+
+    class Meta: db_table = 'Superuser'

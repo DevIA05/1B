@@ -7,9 +7,10 @@ from django.contrib import messages
 # Create your views here.
 def login_user(request):
     if request.method == "POST":
-        username = request.POST['username']
+        matricule = request.POST['matricule']
         password = request.POST['password']
-        user = authenticate(request, username=username, password=password)
+        user = authenticate(request, matricule=matricule, password=password)
+        print(user)
         if user is not None:
             login(request, user)
             return redirect('p1')
