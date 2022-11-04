@@ -1,8 +1,13 @@
+###################################################
+########## À partir du shell python ###############
+###################################################
+
 from quiz.models import Personnel, Collaborateur, Superuser
 import names
 from random import randint
 
-
+s1 = Secteur.objects.create(nomSecteur="marketing", codeSecteur="MKT"); s1.save()
+s2 = Secteur.objects.create(nomSecteur="informatique", codeSecteur="INF"); s2.save()
 for i in range(20):
     n = names.get_full_name().split(" ")
     p = Personnel.objects.create_user(prenom=n[0], nom=n[1], matricule=str(i).zfill(2), codeSecteur="TTT", password=str(i).zfill(2))
@@ -11,6 +16,13 @@ for i in range(20):
            c = Collaborateur.objects.create(matricule=Personnel.objects.get(pk=str(i).zfill(2))); c.save()
     else:
             su = Superuser.objects.create(matricule=Personnel.objects.get(pk=str(i).zfill(2)), role=randint(0,1)); su.save()
+
+###################################################
+############## À partir de python #################
+###################################################
+
+# Les fichiers .json générés sont stockés dans le dossier quiz/data
+# et les données doivent être ajouté avec python manage.py loaddata 
 
 # from random import randint
 # import time

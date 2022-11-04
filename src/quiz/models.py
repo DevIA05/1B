@@ -71,7 +71,12 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
 class Collaborateur(models.Model):
     matricule = models.OneToOneField('Personnel', models.DO_NOTHING, db_column='matricule', primary_key=True)
 
+    # def isContained(self):
+        
+
+
     class Meta: db_table = 'Collaborateur'
+    
 
 class Superuser(models.Model):
     matricule = models.OneToOneField(Personnel, models.DO_NOTHING, db_column='matricule', primary_key=True)
