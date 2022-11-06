@@ -62,6 +62,13 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
     USERNAME_FIELD="matricule"
     REQUIRED_FIELDS = ["nom", "prenom", "codeSecteur"]
     
+    def isSuperUser(self):
+        return Superuser.objects.filter(matricule=self.matricule).exists()
+    
+    def __str__(self):
+        return '%s %s (%s)' % (self.prenom, self.nom, self.codeSecteur.codeSecteur) 
+    
+    
     objects = MyUserManager()
     
     class Meta:

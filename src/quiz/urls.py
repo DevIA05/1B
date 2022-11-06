@@ -29,5 +29,6 @@ urlpatterns = [
     path('p1', views.page1, name="p1"),
     path('p2', views.page2, name="p2"),
     path('p3', views.page3, name="p3"),
+    path('quiz/q', views.quiz, name="quiz"),
 ]
 

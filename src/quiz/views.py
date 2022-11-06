@@ -1,14 +1,13 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
-from quiz.models import Personnel, Collaborateur, Superuser
 from django.http import HttpResponseRedirect
 
+# Custom Decoration: Prevent access to the page
 def notAccessForCollaborateur(function):
     def wrapper(request, *args, **kw):
         user=request.user 
-        print(user)
-        if(not Superuser.objects.filter(matricule=user.matricule).exists()):
+        if(not user.isSuperUser()):
             return HttpResponseRedirect('/unauthorized/')
         else:
             return function(request, *args, **kw)
@@ -32,9 +31,6 @@ def redirectPNF(request, exception):
 def page3(request):
     return redirect('home')
 
+def quiz(request):
+    return render(request, 'quiz/quiz.html')
 
-def addEmployee():
-    import pandas as pd
-
-# Read the csv file
-    pass

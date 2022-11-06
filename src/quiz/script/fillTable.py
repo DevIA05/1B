@@ -24,10 +24,9 @@ for i in range(20):
 # Les fichiers .json générés sont stockés dans le dossier quiz/data
 # et les données doivent être ajouté avec python manage.py loaddata 
 
-# from random import randint
+# from random import randint, randrange
 # import time
 # import names
-# from random import randrange
 # from datetime import timedelta
 # from datetime import datetime
 
