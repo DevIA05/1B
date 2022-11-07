@@ -22,7 +22,6 @@ from . import views
 handler404 = 'quiz.views.redirectPNF'
 
 urlpatterns = [
-    path('intranet/', include("intranet.urls")),
     path('admin/', admin.site.urls),
     path('quiz/home', views.home, name="home"),
     path('quiz', include('django.contrib.auth.urls')),
