@@ -27,5 +27,5 @@ def logout_user(request):
     return redirect('login')
 
 def page_aut(request):
-    template = loader.get_template ('page_aut.html')
+    template = loader.get_template ('identification/page_aut.html')
     return HttpResponse(template.render())
