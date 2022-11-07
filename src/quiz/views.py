@@ -1,6 +1,7 @@
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
+
 from django.http import HttpResponseRedirect
 
 # Custom Decoration: Prevent access to the page
@@ -24,6 +25,7 @@ def page1(request):
 @notAccessForCollaborateur
 def page2(request):
     return render(request, 'quiz/p2.html', {})
+   
 
 def redirectPNF(request, exception):
     return redirect('home')

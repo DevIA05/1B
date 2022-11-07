@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from quiz.models import Collaborateur, Superuser
+from django.template import loader
 
 # Create your views here.
 def login_user(request):
@@ -25,5 +26,6 @@ def logout_user(request):
     messages.success(request, ("You Were Logged Out!"))
     return redirect('login')
 
-
-    
+def page_aut(request):
+    template = loader.get_template ('page_aut.html')
+    return HttpResponse(template.render())

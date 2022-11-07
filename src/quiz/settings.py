@@ -37,6 +37,10 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'appCollab',
+    'intranet',
+    'identification',
+    'appSuperUser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
@@ -79,7 +83,9 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 
 
 # Database
+
 AUTH_USER_MODEL="quiz.Personnel"
+
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
 
@@ -150,5 +156,6 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGIN_REDIRECT_URL = 'identification:p1'
-# LOGOUT_REDIRECT_URL = "identification:quiz"
+
+# LOGIN_REDIRECT_URL = "/"
+
