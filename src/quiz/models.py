@@ -6,37 +6,37 @@ from django.contrib.auth.models import AbstractBaseUser, BaseUserManager
 
 class MyUserManager(BaseUserManager):
     
-    def create_user(self, matricule, prenom, nom, codeSecteur, password=None):
+    def create_user(self, matricule, prenom, nom, codesecteur, password=None):
         if not prenom:
             raise ValueError("Prenom requis")
         if not nom:
             raise ValueError("nom requis")
         if not matricule:
             raise ValueError("matricule requis")
-        if not codeSecteur:
-            raise ValueError("codeSecteur requis")
+        if not codesecteur:
+            raise ValueError("codesecteur requis")
         
         secteur, __ = Secteur.objects.get_or_create(
-            codeSecteur=codeSecteur, defaults={'nomSecteur': codeSecteur}
+            codesecteur=codesecteur, defaults={'nomsecteur': codesecteur}
         )
         
         user=self.model(
             prenom = prenom,
             nom = nom,
             matricule = matricule,
-            codeSecteur = secteur
+            codesecteur = secteur
         )
         user.set_password(password)
         user.save()
         # user.save(using=self._db)
         return user
     
-    def create_superuser(self, prenom, nom, matricule, codeSecteur, password=None):
+    def create_superuser(self, prenom, nom, matricule, codesecteur, password=None):
         user=self.create_user(
             prenom = prenom,
             nom = nom,
             matricule = matricule,
-            codeSecteur = codeSecteur,
+            codesecteur = codesecteur,
             password = password            
         )
         
@@ -48,8 +48,8 @@ class MyUserManager(BaseUserManager):
 
 
 class Secteur(models.Model):
-    codesecteur = models.CharField(db_column='codeSecteur', primary_key=True, max_length=10)  # Field name made lowercase.
-    nomsecteur = models.CharField(db_column='nomSecteur', max_length=20)  # Field name made lowercase.
+    codesecteur = models.CharField(db_column='codesecteur', primary_key=True, max_length=10)  # Field name made lowercase.
+    nomsecteur = models.CharField(db_column='nomsecteur', max_length=20)  # Field name made lowercase.
 
     class Meta:
         db_table = 'secteur'
@@ -58,16 +58,16 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
     prenom = models.CharField(verbose_name = "prenom", max_length=20)
     nom = models.CharField(verbose_name = "nom", max_length=20)
     matricule = models.CharField(verbose_name="matricule", max_length=20, primary_key=True)
-    codeSecteur = models.ForeignKey(Secteur, on_delete=models.CASCADE)
+    codesecteur = models.ForeignKey(Secteur, on_delete=models.CASCADE)
     
     USERNAME_FIELD="matricule"
-    REQUIRED_FIELDS = ["nom", "prenom", "codeSecteur"]
+    REQUIRED_FIELDS = ["nom", "prenom", "codesecteur"]
     
     def isSuperUser(self):
         return Superuser.objects.filter(matricule=self.matricule).exists()
     
     def __str__(self):
-        return '%s %s (%s)' % (self.prenom, self.nom, self.codeSecteur.codeSecteur) 
+        return '%s %s (%s)' % (self.prenom, self.nom, self.codesecteur.codesecteur) 
     
     
     objects = MyUserManager()
@@ -109,7 +109,7 @@ class Quizz(models.Model):
     idquizz = models.AutoField(db_column='idQuizz', primary_key=True)  # Field name made lowercase.
     nomfichier = models.CharField(db_column='nomFichier', max_length=30)  # Field name made lowercase.
     urlfichier = models.CharField(db_column='urlFichier', max_length=200)  # Field name made lowercase.
-    codesecteur = models.ForeignKey('Secteur', models.DO_NOTHING, db_column='codeSecteur')  # Field name made lowercase.
+    codesecteur = models.ForeignKey('Secteur', models.DO_NOTHING, db_column='codesecteur')  # Field name made lowercase.
     matricule = models.ForeignKey('Superuser', models.DO_NOTHING, db_column='matricule', blank=True, null=True)
 
     class Meta:
