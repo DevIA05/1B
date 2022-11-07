@@ -38,7 +38,6 @@ ALLOWED_HOSTS = []
 
 INSTALLED_APPS = [
     'appCollab',
-    'intranet',
     'identification',
     'appSuperUser',
     'django.contrib.admin',
