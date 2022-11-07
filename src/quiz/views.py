@@ -36,3 +36,7 @@ def page3(request):
 def quiz(request):
     return render(request, 'quiz/quiz.html')
 
+
+def index(request):
+    
+    return redirect('login')
