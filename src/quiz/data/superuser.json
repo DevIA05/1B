@@ -1,0 +1,11 @@
+[{"pk": "11", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "12", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "13", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "14", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "15", "model": "quiz.Superuser", "fields": {"role": 0}},
+{"pk": "16", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "17", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "18", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "19", "model": "quiz.Superuser", "fields": {"role": 1}},
+{"pk": "20", "model": "quiz.Superuser", "fields": {"role": 0}}
+]
