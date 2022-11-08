@@ -16,13 +16,13 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path, include
 from . import views
+from quiz.views import index
 
 # Customizing error views
 # https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views
 handler404 = 'quiz.views.redirectPNF'
 
 urlpatterns = [
-    path('intranet/', include("intranet.urls")),
     path('admin/', admin.site.urls),
     path('quiz/home', views.home, name="home"),
     path('quiz', include('django.contrib.auth.urls')),
@@ -30,11 +30,9 @@ urlpatterns = [
     path('p1', views.page1, name="p1"),
     path('p2', views.page2, name="p2"),
     path('p3', views.page3, name="p3"),
-
+    path('', index ,name="index"),
     path('quiz/q', views.quiz, name="quiz"),
-
     path('appSuperUser/', include("appSuperUser.urls")),
-    path('quiz/login', include('identification.urls')),
-
+    path('coll/', include('appCollab.urls')),
 ]
 

@@ -26,6 +26,4 @@ def logout_user(request):
     messages.success(request, ("You Were Logged Out!"))
     return redirect('login')
 
-def page_aut(request):
-    template = loader.get_template ('identification/page_aut.html')
-    return HttpResponse(template.render())
+
