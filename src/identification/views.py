@@ -23,7 +23,7 @@ def login_user(request):
     
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You Were Logged Out!"))
+    messages.success(request, ("Vous avez été déconnecté !"))
     return redirect('login')
 
 def page_aut(request):
