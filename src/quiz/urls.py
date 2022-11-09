@@ -32,7 +32,7 @@ urlpatterns = [
 
     path('quiz/q', views.quiz, name="quiz"),
 
-    path('appSuperUser/', include("appSuperUser.urls"))
+    path('su/', include("appSuperUser.urls"))
 
 ]
 
