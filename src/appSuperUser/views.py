@@ -3,10 +3,10 @@ from django.template import loader
 from django.shortcuts import render
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-import xmltodict, json, os
+import xmltodict, json, os, glob
 from os import walk
 from pathlib import Path
-
+from quiz.models import Quizz
 
 
 def tbd(request):
@@ -24,6 +24,7 @@ def uploadQuizz(request):
             context['nom']= quizz.name
             # print(url)       
         exec(open("script/xmljson.py").read())
+        add()
         # uploadedFile = request.FILES['document']
         # print(type(uploadedFile))
         # print(uploadedFile.name)
@@ -47,4 +48,17 @@ listeFichiers = getListeFichiers(monRepertoire)
 # print(listeFichiers)
 
 urlFichiers=[monRepertoire + f for f in listeFichiers]
-print(urlFichiers)
+# print(urlFichiers)
+
+
+
+def add():
+    for i in range(len(listeFichiers)):
+        nQ= Quizz(nomfichier=listeFichiers[i], urlfichier = urlFichiers[i])
+        nQ.save()
+
+      
+# def delete():
+#     files=glob.glob('/questionnaires')
+#     for f in files:
+#         os.remove(f)     

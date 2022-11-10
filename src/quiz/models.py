@@ -109,7 +109,7 @@ class Quizz(models.Model):
     idquizz = models.AutoField(db_column='idQuizz', primary_key=True)  # Field name made lowercase.
     nomfichier = models.CharField(db_column='nomFichier', max_length=30)  # Field name made lowercase.
     urlfichier = models.CharField(db_column='urlFichier', max_length=200)  # Field name made lowercase.
-    codesecteur = models.ForeignKey('Secteur', models.DO_NOTHING, db_column='codesecteur')  # Field name made lowercase.
+    codesecteur = models.ForeignKey('Secteur', models.DO_NOTHING, db_column='codesecteur',blank=True, null=True)  # Field name made lowercase.
     matricule = models.ForeignKey('Superuser', models.DO_NOTHING, db_column='matricule', blank=True, null=True)
 
     class Meta:
