@@ -67,12 +67,12 @@ def add():
 #     for f in files:
 #         os.remove(f)     
 
-def addEmp(request):
-    return render(request, 'addEmployee.html', {})
+# def addEmp(request):
+#     return render(request, 'addEmployee.html', {})
 
-def addDataInDB(request):
-    if request.method == "POST":
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+# def addDataInDB(request):
+#     if request.method == "POST":
+#         print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
     #     matricule = request.POST['matricule']
     #     result = request.GET.get('result', None)
     #     print(result)
