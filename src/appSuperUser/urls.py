@@ -9,8 +9,9 @@ urlpatterns =[
     path('uploadQuizz/', views.uploadQuizz, name='uploadQuizz'),
     path('ae', views.addEmp, name='ajoutEmp'),
     re_path(r'^addDataInDB$', views.addDataInDB, name='addDataInDB'),
-    path('pa', views.pa, name='pa'),
-    path('upload', views.upload, name="upload"),
+    path('accueil', views.pa, name='pa'),
+    path('up', views.test),
+    
 ]
 
 

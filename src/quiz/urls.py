@@ -33,6 +33,6 @@ urlpatterns = [
     path('p3', views.page3, name="p3"),
     path('quiz/q', views.quiz, name="quiz"),
     path('appSuperUser/', include("appSuperUser.urls")),
-    path('coll/', include('appCollab.urls')),
+    path('quizz/', include('appCollab.urls')),
 ]
 

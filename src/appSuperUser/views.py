@@ -13,6 +13,10 @@ def tbd(request):
     template = loader.get_template ('tbd_sc.html')
     return HttpResponse(template.render())
 
+def pa(request):
+    template = loader.get_template ('page_aut.html')
+    return HttpResponse(template.render())
+
 def uploadQuizz(request):
     context ={}
     if request.method =='POST':
@@ -77,3 +81,4 @@ def addDataInDB(request):
     #         # Data that you want to send to javascript function
     # }
     # return JsonResponse(data)
+

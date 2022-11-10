@@ -14,7 +14,7 @@ def login_user(request):
         user = authenticate(request, matricule=matricule, password=password)
         if user is not None:
             login(request, user)
-            return redirect('p1')
+            return redirect('pa1')
         else:
             messages.success(request, ("Erreur de matricule ou de mot de passe, veuillez ressayer"))
             return redirect('login')
