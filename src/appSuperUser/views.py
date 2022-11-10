@@ -62,3 +62,18 @@ def add():
 #     files=glob.glob('/questionnaires')
 #     for f in files:
 #         os.remove(f)     
+
+def addEmp(request):
+    return render(request, 'addEmployee.html', {})
+
+def addDataInDB(request):
+    if request.method == "POST":
+        print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
+    #     matricule = request.POST['matricule']
+    #     result = request.GET.get('result', None)
+    #     print(result)
+    # # Any process that you want
+    #     data = {
+    #         # Data that you want to send to javascript function
+    # }
+    # return JsonResponse(data)
