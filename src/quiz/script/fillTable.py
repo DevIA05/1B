@@ -1,7 +1,7 @@
 ###################################################
 ########## À partir du shell python ###############
 ###################################################
-
+from . import models
 from quiz.models import Personnel, Collaborateur, Superuser, Secteur
 import names
 from random import randint

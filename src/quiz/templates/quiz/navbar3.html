@@ -14,15 +14,21 @@
     
 </head>
 <body>
-    <nav class="navbar" style="background-color: #0a4168;" >
+    <nav class="navbar fixed-top" style="background-color: #0a4168;" >
         <div class="container">
           <a class="navbar-brand" href="#">
             <img src="{% static 'logo.png' %}"  width="200" height="50">
           </a>
-          <a href="https://www.youtube.com">
-            <button type="button" class="btn btn-primary">connexion</button>
-            </a> 
-        </div>
+          {% if user.is_authenticated %}
+        <form action="" method="post">
+            {% csrf_token %}
+            
+        </form>
+       
+          <a class="btn btn-outline-primary" href="{% url 'logout' %}" role="button"> Deconnexion </a>
+          {% endif %}
+          </div>
+      
       </nav>
 
     {% block mymessage %}

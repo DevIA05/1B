@@ -16,14 +16,14 @@ def login_user(request):
             login(request, user)
             return redirect('p1')
         else:
-            messages.success(request, ("There Was An Error Logging In, Try Again..."))
+            messages.success(request, ("Erreur de matricule ou de mot de passe, veuillez ressayer"))
             return redirect('login')
     else:
         return render(request, 'identification/login.html', {})
     
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You Were Logged Out!"))
+    messages.success(request, ("Session deconnecté"))
     return redirect('login')
 
 
