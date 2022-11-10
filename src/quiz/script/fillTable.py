@@ -4,7 +4,6 @@
 
 import names
 from quiz.models import Personnel, Collaborateur, Superuser, Secteur
-import names
 from random import randint
 
 s1 = Secteur.objects.create(nomsecteur="marketing", codesecteur="MKT"); s1.save()

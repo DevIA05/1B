@@ -16,16 +16,14 @@ def login_user(request):
             login(request, user)
             return redirect('p1')
         else:
-            messages.success(request, ("There Was An Error Logging In, Try Again..."))
+            messages.success(request, ("Erreur de matricule ou de mot de passe, veuillez ressayer"))
             return redirect('login')
     else:
         return render(request, 'identification/login.html', {})
     
 def logout_user(request):
     logout(request)
-    messages.success(request, ("Vous avez été déconnecté !"))
+    messages.success(request, ("Session deconnectée"))
     return redirect('login')
 
-def page_aut(request):
-    template = loader.get_template ('identification/page_aut.html')
-    return HttpResponse(template.render())
+
