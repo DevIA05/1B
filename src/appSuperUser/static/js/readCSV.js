@@ -1,84 +1,73 @@
-
-let res;
-
 const csvFile = document.getElementById('csvFile')
+const form = document.getElementById('myForm')
+
+$(document).ready( function () {
+    $('#example').DataTable();
+} );
+
+// Extract data from csv 
 csvFile.addEventListener('change', (e) => {
     Papa.parse(csvFile.files[0], {
         download: true,
+        encoding: "ISO-8859-1",
         header: false,
         skipEmptyLines: true,
         complete: function(results){
-            res = results;
-            
+            fillHtmlTable(results.data)
         }
     })
 })
 
-console.log(typeof(res))
+// Fill table with data
+function fillHtmlTable(res){
+    const t = $('#example').DataTable();
+    emptyTable(t) 
+    for (let i = 1; i < res.length; i++) { 
+        t.row.add([res[i][7], res[i][6], res[i][5]]).draw(false);
+  }
+}
 
-// var editor; // use a global for the submit and return data rendering in the examples
- 
-// $(document).ready(function() {
-//     editor = new $.fn.dataTable.Editor( {
-//         ajax: "../php/staff.php",
-//         table: "#example",
-//         fields: [ {
-//                 label: "First name:",
-//                 name: "first_name"
-//             }, {
-//                 label: "Last name:",
-//                 name: "last_name"
-//             }, {
-//                 label: "Position:",
-//                 name: "position"
-//             }, {
-//                 label: "Office:",
-//                 name: "office"
-//             }, {
-//                 label: "Extension:",
-//                 name: "extn"
-//             }, {
-//                 label: "Start date:",
-//                 name: "start_date",
-//                 type: "datetime"
-//             }, {
-//                 label: "Salary:",
-//                 name: "salary"
-//             }
-//         ]
-//     } );
- 
-//     // Activate an inline edit on click of a table cell
-//     $('#example').on( 'click', 'tbody td:not(:first-child)', function (e) {
-//         editor.inline( this );
-//     } );
- 
-//     $('#example').DataTable( {
-//         dom: "Bfrtip",
-//         ajax: "../php/staff.php",
-//         order: [[ 1, 'asc' ]],
-//         columns: [
-//             {
-//                 data: null,
-//                 defaultContent: '',
-//                 className: 'select-checkbox',
-//                 orderable: false
-//             },
-//             { data: "first_name" },
-//             { data: "last_name" },
-//             { data: "position" },
-//             { data: "office" },
-//             { data: "start_date" },
-//             { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
-//         ],
-//         select: {
-//             style:    'os',
-//             selector: 'td:first-child'
-//         },
-//         buttons: [
-//             { extend: "create", editor: editor },
-//             { extend: "edit",   editor: editor },
-//             { extend: "remove", editor: editor }
-//         ]
-//     } );
-// } );
+// Empty the table
+function emptyTable(table){
+    table
+    .clear()
+    .draw();
+}
+
+// Get Data from html table
+function getDataFromTable(){
+    const res = $('#example').DataTable().rows().data();
+    let dict = {};
+    for (let e = 0; e < res.length; e++) {
+        dict[e] = {"prenom": res[e][0], "nom": res[e][1], "matricule": res[e][2]}
+    }
+    return dict
+}
+
+function sendData(event){
+    event.preventDefault();
+    console.log("Hello")
+    const res = getDataFromTable()
+    $.ajax({
+        type: "POST",
+        url: 'addDataInDB',
+        // headers: {
+        //     'X-CSRFToken': $.cookie("csrftoken")
+        // },
+        data: {
+            csrfmiddlewaretoken: '{{ csrf_token }}',
+            "result": res,
+        },
+        dataType: "json",
+        success: function (data) {
+            // any process in data
+            alert("successfull")
+        },
+        failure: function () {
+            alert("failure");
+        }
+    })
+}
+
+form.addEventListener('submit', sendData);
+  
