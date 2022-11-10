@@ -8,3 +8,7 @@ def tbd(request):
 def pa(request):
     template = loader.get_template ('page_aut.html')
     return HttpResponse(template.render())
+
+def upload(request):
+    template = loader.get_template ('upLoadQuiz.html')
+    return HttpResponse(template.render())
