@@ -10,7 +10,7 @@ urlpatterns =[
     path('ae', views.addEmp, name='ajoutEmp'),
     re_path(r'^addDataInDB$', views.addDataInDB, name='addDataInDB'),
     path('accueil', views.pa, name='pa'),
-    path('up', views.test),
+    
     
 ]
 
