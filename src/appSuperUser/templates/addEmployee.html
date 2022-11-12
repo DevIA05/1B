@@ -11,32 +11,40 @@
 			  src="https://code.jquery.com/jquery-3.6.1.min.js"
 			  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
 			  crossorigin="anonymous" defer></script>
-
     <script src="https://cdnjs.cloudflare.com/ajax/libs/PapaParse/5.3.2/papaparse.min.js" defer></script>
-    <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css">
-    <script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js" defer></script>
-    
-    <script src="{% static 'js/readCSV.js' %}" defer></script>
-    
+    <script src="{% static 'js/readCSV.js' %}"   defer></script>
+    <script src="{% static 'js/editTable.js' %}" defer></script>
+
 </head>
 <body>
     <h1> Ajout d'employé </h1>
-    <form id="myForm">
+    <form id="myForm" method="POST">
+        {% csrf_token %}
         <input type="file" id="csvFile" accept=".csv" />
         <br />
         <button type="submit">Envoyer</button>
     </form>
 
-    <table id="example" class="display" width="100%" cellspacing="0">
-        <thead>
+      <div id="wrapper">
+         <table align='center' cellspacing=2 cellpadding=5 id="data_table" border=1>
+        <!-- <thead> -->
             <tr>
-                <th>Prénom</th>
-                <th>Nom</th>
-                <th>Matricule</th>
-                {% comment %} <th>Password</th> {% endcomment %}
+               <th>Prénom</th>
+               <th>Nom</th>
+               <th>Matricule</th>
+			   <th>Password</th>
+
             </tr>
-        </thead>
-    </table>  
-    
+        <!-- </thead> -->
+            <tr>
+               <td> <input type="text" id="new_name">    </td>
+               <td> <input type="text" id="new_country"> </td>
+               <td> <input type="text" id="new_age">     </td>
+			   <td> <input type="text" id="new_pwd">     </td>
+               <td> <input type="button" class="add" onclick="add_row();" value="Add Row"></td>
+            </tr>
+         </table>
+      </div>
+
 </body>
 </html>
