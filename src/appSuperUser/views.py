@@ -7,6 +7,7 @@ import xmltodict, json, os, glob
 from os import walk
 from pathlib import Path
 from quiz.models import Quizz
+from quiz.models import Personnel, Collaborateur, Superuser, Secteur
 
 
 def tbd(request):
@@ -71,14 +72,11 @@ def addEmp(request):
     return render(request, 'addEmployee.html', {})
 
 def addDataInDB(request):
-    if request.method == "POST":
-        print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    #     matricule = request.POST['matricule']
-    #     result = request.GET.get('result', None)
-    #     print(result)
-    # # Any process that you want
-    #     data = {
-    #         # Data that you want to send to javascript function
-    # }
-    # return JsonResponse(data)
-
+    if request.method == "POST": 
+        import pdb; pdb.set_trace()
+        print(request.POST.lists()[0])
+        # for i in range(10):
+        #     pass
+        #import pdb; pdb.set_trace()
+        #request.POST.getlist('result[1][matricule]')[0]
+    return render(request, 'addEmployee.html', {})
