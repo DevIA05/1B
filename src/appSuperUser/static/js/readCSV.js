@@ -65,6 +65,7 @@ function sendData(event){
     event.preventDefault();
     console.log("sendData")
     const res = getDataFromTable()
+    // console.log(res)
     const csrf  = $('input[name="csrfmiddlewaretoken"]').val()  
     $.ajax({
         type: "POST",

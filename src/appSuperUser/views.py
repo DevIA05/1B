@@ -73,10 +73,15 @@ def addEmp(request):
 
 def addDataInDB(request):
     if request.method == "POST": 
-        import pdb; pdb.set_trace()
-        print(request.POST.lists()[0])
-        # for i in range(10):
-        #     pass
         #import pdb; pdb.set_trace()
-        #request.POST.getlist('result[1][matricule]')[0]
-    return render(request, 'addEmployee.html', {})
+        # print(request.POST)
+        for i in range(1, ((len(request.POST)-1)//4)+1): # on ne prend pas la valeur csrfmiddlewaretoken. 
+                                                    # Il y a pour l'instant quatres colonnes.
+            matricule = request.POST['result['+str(i)+'][matricule]']
+            prenom    = request.POST['result['+str(i)+'][prenom]'] 
+            nom       = request.POST['result['+str(i)+'][nom]'] 
+            password  = request.POST['result['+str(i)+'][password]'] 
+            p = Personnel.objects.create_user(prenom=prenom, nom=nom, matricule=matricule, codesecteur="MKT", password=password); p.save()
+            c = Collaborateur.objects.create(matricule=Personnel.objects.get(pk=matricule)); c.save()
+        #import pdb; pdb.set_trace()
+    return render(request, 'addEmployee.html')
