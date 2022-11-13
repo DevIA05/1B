@@ -8,7 +8,7 @@ from os import walk,listdir
 from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
-
+from django.contrib.auth.decorators import login_required
 
 def tbd(request):
     template = loader.get_template ('tbd_sc.html')
@@ -18,6 +18,7 @@ def pa(request):
     template = loader.get_template ('page_aut.html')
     return HttpResponse(template.render())
 
+@login_required
 def uploadQuizz(request):
     monRepertoireQ = 'questionnaires/'
     monRepertoireTemp = 'qjsonTemp/'
