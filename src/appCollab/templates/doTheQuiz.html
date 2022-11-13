@@ -1,0 +1,39 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+    <script src="{% static 'js/timer.js' %}" defer></script>
+    <title>Document</title>
+</head>
+<body>
+    <h1>QUIZ</h1>
+    <div id="timer"></div>
+
+    <div class="container-quiz">
+        <p class="titre"> {{titre}} </p>
+        <p class="intitule"> {{intitule}} </p>
+
+        <div class="listReponse">
+            <div class="reponses">
+                {% for rep in reponses %}
+                <input name={{"rep"}}{{rep.1}} type="checkbox" id="reponse">
+                <label for={{"rep"}}{{rep.1}}>{{rep.0}}</label>
+                {% endfor %}
+            </div>
+        </div>
+    </div>
+    <form id="myForm" method="POST">
+        {% csrf_token %}
+        <button type="submit">Valider</button>
+    </form>
+
+    <script>
+        const departMinutes = {{duree}}
+    </script>
+
+</body>
+</html>
