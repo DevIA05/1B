@@ -1,10 +1,11 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from django.core.files.storage import FileSystemStorage
 from django.conf import settings
-import xmltodict, json, os, glob
-from os import walk
+import xmltodict, json, os, glob, shutil
+from os import walk,listdir
+from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
 
@@ -18,54 +19,37 @@ def pa(request):
     return HttpResponse(template.render())
 
 def uploadQuizz(request):
+    monRepertoireQ = 'questionnaires/'
+    monRepertoireTemp = 'qjsonTemp/'
+    monRepertoire='qjson/'
     context ={}
+    delete(monRepertoireTemp),
+    delete(monRepertoireQ),
     if request.method =='POST':
         for f in request.FILES.getlist('document'):
             quizz=f
             # print(str(f))
             fs=FileSystemStorage()
-            fs.save(quizz.name,quizz)
-            context['nom']= quizz.name
-            # print(url)       
+            fs.save(quizz.name,quizz)           
         exec(open("script/xmljson.py").read())
-        add()
-        # uploadedFile = request.FILES['document']
-        # print(type(uploadedFile))
-        # print(uploadedFile.name)
-        # print(uploadedFile.size)
-        # fs = FileSystemStorage()
-        # fs.save(uploadedFile.name, uploadedFile)
-        # context['nom']= uploadedFile.name
-        # context['url']=fs.url(name)
-    return render(request,'uploadQuizz.html', context)
-
-def  getListeFichiers(dossier) :
-    listeFichiers = []
-    for (repertoire, sousRepertoires, fichiers) in walk(dossier):
-        listeFichiers.extend(fichiers)
-        break                            
-    # print(listeFichiers)
-    return listeFichiers
-
-monRepertoire = 'qjson/'
-listeFichiers = getListeFichiers(monRepertoire)
-# print(listeFichiers)
-
-urlFichiers=[monRepertoire + f for f in listeFichiers]
-# print(urlFichiers)
+        listeFichiers=[f for f in listdir(monRepertoireTemp) if isfile(join(monRepertoireTemp,f))]
+        urlFichiers=[monRepertoire + f for f in listeFichiers]
+        context['noms']=listeFichiers    
+        for i in range(len(listeFichiers)):
+            nQ= Quizz(nomfichier=listeFichiers[i], urlfichier = urlFichiers[i])
+            nQ.save()           
+    #     return redirect('uploadQuizz')
+    # else:
+    return render(request,'uploadQuizz.html', context=context)
 
 
+def delete(dossier):
+    for root, dirs, files in os.walk(dossier):
+        for f in files:
+            os.unlink(os.path.join(root, f))
+        for d in dirs:
+            shutil.rmtree(os.path.join(root, d))
 
-def add():
-    for i in range(len(listeFichiers)):
-        nQ= Quizz(nomfichier=listeFichiers[i], urlfichier = urlFichiers[i])
-        nQ.save()
-
-      
-# def delete():
-#     files=glob.glob('/questionnaires')
-#     for f in files:
-#         os.remove(f)     
 
 # def addEmp(request):
 #     return render(request, 'addEmployee.html', {})
