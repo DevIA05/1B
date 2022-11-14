@@ -18,6 +18,20 @@ from django.urls import path, include
 from . import views
 from quiz.views import index
 
+from django.http import HttpResponseRedirect
+from django.contrib.auth.decorators import login_required
+
+# Custom Decoration: Prevent access to the page
+def notAccessForCollaborateur(function):
+    def wrapper(request, *args, **kw):
+        user=request.user 
+        if(not user.isSuperUser()):
+            return HttpResponseRedirect('/unauthorized/')
+        else:
+            return function(request, *args, **kw)
+    return wrapper
+
+
 # Customizing error views
 # https://docs.djangoproject.com/en/dev/topics/http/views/#customizing-error-views
 handler404 = 'quiz.views.redirectPNF'
@@ -28,11 +42,11 @@ urlpatterns = [
     path('quiz/home', views.home, name="home"),
     path('quiz', include('django.contrib.auth.urls')),
     path('quiz/', include('identification.urls')),
-    path('p1', views.page1, name="p1"),
-    path('p2', views.page2, name="p2"),
+    path('p1', login_required()(views.page1), name="p1"),
+    path('p2', login_required()(notAccessForCollaborateur(views.page2)), name="p2"),
     path('p3', views.page3, name="p3"),
     path('quiz/q', views.quiz, name="quiz"),
     path('appSuperUser/', include("appSuperUser.urls")),
-    path('quizz/', include('appCollab.urls')),
+    path('quiz/', include('appCollab.urls')),
 ]
 

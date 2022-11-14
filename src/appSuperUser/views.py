@@ -9,6 +9,8 @@ from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
 from django.contrib.auth.decorators import login_required
+from quiz.models import Personnel, Collaborateur, Superuser, Secteur
+
 
 def tbd(request):
     template = loader.get_template ('tbd_sc.html')
@@ -55,15 +57,20 @@ def delete(dossier):
 # def addEmp(request):
 #     return render(request, 'addEmployee.html', {})
 
-# def addDataInDB(request):
-#     if request.method == "POST":
-#         print("AAAAAAAAAAAAAAAAAAAAAAAAAAA")
-    #     matricule = request.POST['matricule']
-    #     result = request.GET.get('result', None)
-    #     print(result)
-    # # Any process that you want
-    #     data = {
-    #         # Data that you want to send to javascript function
-    # }
-    # return JsonResponse(data)
+def addEmp(request):
+    return render(request, 'addEmployee.html', {})
 
+def addDataInDB(request):
+    if request.method == "POST": 
+        #import pdb; pdb.set_trace()
+        # print(request.POST)
+        for i in range(1, ((len(request.POST)-1)//4)+1): # on ne prend pas la valeur csrfmiddlewaretoken. 
+                                                    # Il y a pour l'instant quatres colonnes.
+            matricule = request.POST['result['+str(i)+'][matricule]']
+            prenom    = request.POST['result['+str(i)+'][prenom]'] 
+            nom       = request.POST['result['+str(i)+'][nom]'] 
+            password  = request.POST['result['+str(i)+'][password]'] 
+            p = Personnel.objects.create_user(prenom=prenom, nom=nom, matricule=matricule, codesecteur="MKT", password=password); p.save()
+            c = Collaborateur.objects.create(matricule=Personnel.objects.get(pk=matricule)); c.save()
+        #import pdb; pdb.set_trace()
+    return render(request, 'addEmployee.html')
