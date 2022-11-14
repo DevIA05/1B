@@ -66,6 +66,9 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
     def isSuperUser(self):
         return Superuser.objects.filter(matricule=self.matricule).exists()
     
+    def isCollabUser(self):
+        return Collaborateur.objects.filter(matricule=self.matricule).exists()
+    
     def __str__(self):
         return '%s %s (%s)' % (self.prenom, self.nom, self.codesecteur.codesecteur) 
     

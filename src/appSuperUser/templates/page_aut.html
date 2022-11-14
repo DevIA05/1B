@@ -1,8 +1,6 @@
-{% extends 'navbar2.html' %}
+{% extends 'quiz/main.html' %}
 
 {% block content %}
-   
-
         <div class="container col-1 w-50 mx-auto">
             <form>
             <a class="row-lg w-100 py-3 my-3 btn btn-primary" href="{% url 'tbd' %}" role="button">Gestionnaire de session</a>
@@ -10,15 +8,4 @@
             <a class="row-lg w-100 py-3 my-3 btn btn-primary" href="ae" role="button">Ajouter des collaborateurs</a>
             </form>
         </div>
-
-        {% comment %} <div class="clock">
-            <div class="clock-face">
-            <div class="hand secHand"></div>
-            <div class="hand minHand"></div>
-            <div class="hand hourHand"></div>
-            <div class="circle"></div>
-            </div>
-        </div> {% endcomment %}
-
-
 {% endblock %}
