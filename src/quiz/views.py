@@ -29,3 +29,6 @@ def quiz(request):
 
 def index(request):
     return redirect('login')
+
+def test(request):
+    return render(request, 'quiz/test.html')

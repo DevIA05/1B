@@ -1,12 +1,7 @@
+{% extends 'quiz/main.html' %}
+
+{% block header %}
 {% load static %}
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
-    
     <script
 			  src="https://code.jquery.com/jquery-3.6.1.min.js"
 			  integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
@@ -15,8 +10,9 @@
     <script src="{% static 'js/readCSV.js' %}"   defer></script>
     <script src="{% static 'js/editTable.js' %}" defer></script>
 
-</head>
-<body>
+{% endblock%}
+
+{% block content %}
     <h1> Ajout d'employé </h1>
     <form id="myForm" method="POST">
         {% csrf_token %}
@@ -46,5 +42,4 @@
          </table>
       </div>
 
-</body>
-</html>
+{% endblock %}

@@ -13,13 +13,10 @@ from quiz.models import Personnel, Collaborateur, Superuser, Secteur
 
 
 def tbd(request):
-    template = loader.get_template ('tbd_sc.html')
-    return HttpResponse(template.render())
+    return render(request,'tbd_sc.html')
 
 def pa(request):
-    template = loader.get_template ('page_aut.html')
-    return HttpResponse(template.render())
-
+    return render(request,'page_aut.html')
 
 def uploadQuizz(request):
     monRepertoireQ = 'questionnaires/'

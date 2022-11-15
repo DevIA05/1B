@@ -5,12 +5,10 @@ from quiz.models import Quizz
 import json
 
 def pa1(request):
-    template = loader.get_template ('page_accueil.html')
-    return HttpResponse(template.render())
+    return render(request, 'page_accueil.html')
 
 def ce(request):
-    template = loader.get_template ('condi_exam.html')
-    return HttpResponse(template.render())
+    return render(request, 'condi_exam.html')
 
 def doTheQuiz(request):
     getQuiz = Quizz.objects.get(idquizz=2)    
