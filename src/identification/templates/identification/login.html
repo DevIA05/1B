@@ -1,9 +1,27 @@
-{% extends 'identification/base.html' %}
+{% extends 'quiz/main.html' %}
+{% load static %}
+
 
 {% block content %}
 	
-	<h1>Connexion</h1>
+	
 <br/>
+<div class="container">
+  
+  {% if messages %}
+    {% for message in messages %}
+      
+      <div class="alert alert-warning alert-dismissible fade show" role="alert">
+        {{ message }}
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+      </div>
+
+    {% endfor %}
+  {% endif %}
+
+  <h1>Connexion</h1>
+
+
 
 
 		<form action="" method=POST>
@@ -25,10 +43,12 @@
 
 			
 
-			<input type="submit" value="Submit" class="btn btn-secondary">
+			<input type="submit" value="Se connecter" class="btn btn-secondary">
 
 		</form>
 		
 
-<br/><br/>	
+  </div>
+
+
 {% endblock %}

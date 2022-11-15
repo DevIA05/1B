@@ -1,7 +1,7 @@
 from django.http import HttpResponse
 from django.template import loader
 from django.shortcuts import render
-from quiz.models import Quizz
+from quiz.models import Quizz, Personnel, Collaborateur, Superuser
 import json
 
 def pa1(request):
@@ -9,6 +9,8 @@ def pa1(request):
 
 def ce(request):
     return render(request, 'condi_exam.html')
+
+
 
 def doTheQuiz(request):
     getQuiz = Quizz.objects.get(idquizz=2)    

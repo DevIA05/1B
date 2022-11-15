@@ -19,6 +19,7 @@
             <a class="navbar-brand" href="#">
                 <img src="{% static 'logo.png' %}"  width="200" height="50">
             </a>
+            <span class="personne"> {{ user.prenom }} {{user.nom}} {{user.matricule}} </span>
             <nav class="nav">         
                 {% if user.is_authenticated %}
             
