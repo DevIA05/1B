@@ -4,7 +4,12 @@
 {% load static %}
 
     <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+    <script
+    src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    crossorigin="anonymous" defer></script>
     <script src="{% static 'js/timer.js' %}" defer></script>
+    <script src="{% static 'js/quizz.js' %}" defer></script>
  
 {% endblock %}
 {% block content %}
@@ -19,8 +24,8 @@
         <div class="listReponse">
             <div class="reponses">
                 {% for rep in reponses %}
-                <input name={{"rep"}}{{rep.1}} type="checkbox" id="reponse">
-                <label for={{"rep"}}{{rep.1}}>{{rep.0}}</label>
+                <input name={{rep.1}} type="checkbox" class="reponse">
+                <label for={{rep.1}}>{{rep.0}}</label>
                 {% endfor %}
             </div>
         </div>
@@ -30,10 +35,9 @@
         <button type="submit">Valider</button>
     </form>
 
+
     <script>
         const departMinutes = {{duree}}
     </script>
-
-
 
 {% endblock %}
