@@ -9,11 +9,67 @@ from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
 from django.contrib.auth.decorators import login_required
-from quiz.models import Personnel, Collaborateur, Superuser, Secteur
+from quiz.models import Personnel, Collaborateur, Superuser, Secteur, Sessionquizz
+from django.urls import reverse
+
 
 
 def tbd(request):
-    return render(request,'tbd_sc.html')
+    context={}
+    session=Sessionquizz.objects.all().values()
+    # print(session)
+    context={'session':session}
+    return render(request,'tbd_sc.html', context=context)
+
+def addS(request):
+    context={}
+    qz=Quizz.objects.values_list('idquizz',flat=True)
+    
+    
+    context={'qz':qz}
+    
+    return render(request,'addsession.html',context)
+
+def addrecord(request):
+    x = request.POST['nquizz']
+    y = request.POST['dateC']
+    z = request.POST['dateE']
+    w = request.POST['timer']
+    e = request.POST['eva']
+    user=request.user
+    session = Sessionquizz(idquizz_id=x, datecreation=y, dateexpiration=z, timer=w, evaluation=e, matricule_id=user.matricule)
+    session.save()
+    return HttpResponseRedirect(reverse('tbd'))
+
+def deleteS(request, idsession):
+    session= Sessionquizz.objects.get(idsession=idsession)
+    session.delete()
+    return HttpResponseRedirect(reverse('tbd'))
+
+def modificationS(request, idsession):
+    session=Sessionquizz.objects.get(idsession=idsession)
+    qz=Quizz.objects.values_list('idquizz',flat=True)
+    context = { 'qz':qz,
+        'session':session
+    }
+    return render(request,'modificationSession.html',context)
+
+def updaterecord(request, idsession):
+    x = request.POST['nquizz']
+    y = request.POST['dateC']
+    z = request.POST['dateE']
+    w = request.POST['timer']
+    e = request.POST['eva']
+    user=request.user
+    session=Sessionquizz.objects.get(idsession=idsession)
+    session.idquizz_id=x
+    session.datecreation=y
+    session.dateexpiration=z
+    session.timer=w
+    session.evaluation=e
+    session.matricule_id=user.matricule
+    session.save()
+    return HttpResponseRedirect(reverse('tbd'))
 
 def pa(request):
     return render(request,'page_aut.html')

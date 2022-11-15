@@ -1,0 +1,45 @@
+{% extends 'quiz/main.html' %}
+
+{% block content %}
+
+<section>
+
+    <div class="container">
+<h1>Créer une session</h1>
+
+<form action="addrecord/" method="post">
+{% csrf_token %}
+<select name="nquizz">
+    <option disabled="true" selected> Choisir un Quizz </option>
+    {% for q in qz%}
+    <option>{{q}}</option>
+    {%endfor%}  
+</select>
+<br><br>
+Date:<br>
+<input name="dateC">
+<br><br>
+Date expiration:<br>
+<input name="dateE">
+<br><br>
+Évaluation ?
+<input  type="checkbox" value="True" name="eva">
+<input  type="hidden" value="False" name="eva">
+<br><br>
+Timer:<br>
+<input name="timer">
+<br><br>
+
+
+<input type="submit" value="Valider">
+</form>
+
+</div>
+
+</section>
+
+
+
+
+
+{% endblock %}

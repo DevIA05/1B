@@ -9,7 +9,12 @@ urlpatterns =[
     path('uploadQuizz/', views.uploadQuizz, name='uploadQuizz'),
     path('ajout-personnel/', views.addDataInDB, name='ajoutEmp'),
     re_path(r'^addDataInDB$', views.addDataInDB, name='addDataInDB'),
-    path('accueil', views.pa, name='pa'),    
+    path('accueil', views.pa, name='pa'),
+    path('addsession/',views.addS, name='addS'),
+    path('addsession/addrecord/', views.addrecord, name='addrecord'),
+    path('delete/<int:idsession>', views.deleteS, name='delete'),
+    path('modification/<int:idsession>',views.modificationS,name='modification'),
+    path('modification/updaterecord/<int:idsession>',views.updaterecord,name='updaterecord'),
 ]
 
 
