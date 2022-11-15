@@ -24,8 +24,8 @@ from django.contrib.auth.decorators import login_required
 # Custom Decoration: Prevent access to the page
 def notAccessForCollaborateur(function):
     def wrapper(request, *args, **kw):
-        user=request.user 
-        if(not user.isSuperUser()):
+        user=request.user           # we get the user instance
+        if(not user.isSuperUser()): # If user is not a superuser we redirect it to the unauthorized page of django
             return HttpResponseRedirect('/unauthorized/')
         else:
             return function(request, *args, **kw)
@@ -47,7 +47,7 @@ urlpatterns = [
     path('p3', views.page3, name="p3"),
     path('quiz/q', views.quiz, name="quiz"),
     path('quizz/superuser/', include("appSuperUser.urls")),
-    path('quiz/collaborateur/', include('appCollab.urls')),
+    path('quizz/collaborateur/', include('appCollab.urls')),
     path('test', views.test, name="test"),
 ]
 
