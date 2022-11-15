@@ -8,11 +8,12 @@
  
 {% endblock %}
 {% block content %}
+    <div class="container">
+        <h1>QUIZ</h1>
+        <div id="timer"></div>
+    </div>
 
-    <h1>QUIZ</h1>
-    <div id="timer"></div>
-
-    <div class="container-quiz">
+    <div class="container">
         <p class="titre"> {{titre}} </p>
         <p class="intitule"> {{intitule}} </p>
 
@@ -27,7 +28,11 @@
     </div>
     <form id="myForm" method="POST">
         {% csrf_token %}
-        <button type="submit">Valider</button>
+        <div class="container">
+            <button class="btn btn-secondary btn-lg" type="submit"> Suivant </button>
+            <a href={% url 'pa1' %} class="btn btn-primary btn-lg active" role="button" aria-pressed="true">Retour au menu</a>
+        </div>
+        {% comment %} <button type="submit">Valider</button> {% endcomment %}
     </form>
 
     <script>
