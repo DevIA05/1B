@@ -15,7 +15,7 @@
 
 a {
   text-decoration: none;
-  color: #222;
+  color: rgb(247, 247, 247);
 }
 
 html {
@@ -25,6 +25,8 @@ html {
 
 body {
   font-family: "Roboto", sans-serif;
+  background-color: #111827;
+  color: #111827;
 }
 
 .sr-only {

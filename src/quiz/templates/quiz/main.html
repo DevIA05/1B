@@ -17,7 +17,7 @@
     <header class="site-header">
         <div class="wrapper site-header__wrapper">
             <a class="navbar-brand" href="#">
-                <img src="{% static 'logo.png' %}"  width="200" height="50">
+                <img class= "logo" src="{% static 'logo.png' %}"  >
             </a>
             <span class="personne"> {{ user.prenom }} {{user.nom}} {{user.matricule}} </span>
             <nav class="nav">         
@@ -30,5 +30,6 @@
       </header>
       {%block content%}
       {% endblock%}
+
 </body>
 </html>

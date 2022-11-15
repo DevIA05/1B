@@ -6,9 +6,11 @@
   font-weight: bold;
   font-size: 20px; }
 
-.site-header {
+.site-header { /* couleur de la navabar*/
   position: relative;
-  background-color: #def7ff; }
+  /* background-color: #1c84a6; } */
+  /* background: rgb(63,212,251); */
+  background: radial-gradient(circle, rgba(63,212,251,1) 0%, rgba(24,59,134,0.8799894957983193) 22%, rgba(5,7,70,0.5130427170868348) 43%, rgba(9,13,56,0.5746673669467788) 60%, rgba(10,21,77,1) 78%, rgba(0,0,0,1) 100%);}
 
 .site-header__wrapper {
   padding-top: 1rem;
@@ -33,7 +35,7 @@
     right: 0;
     left: 0;
     z-index: -1;
-    background-color: #d9f0f7;
+    background-color: #80c5da;
     visibility: hidden;
     opacity: 0;
     transform: translateY(-100%);
@@ -55,3 +57,16 @@
       position: absolute;
       right: 1rem;
       top: 1rem; } }
+
+span.personne {
+  color: aliceblue;
+  text-transform: uppercase;
+  font-weight: bold;
+  font-size: 1.875em;
+}
+
+.logo { /*couleur du nom, prenom, matricule*/
+  width: 200px;
+  height: 50px;
+  border-radius: 5%;
+}
