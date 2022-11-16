@@ -8,7 +8,8 @@ function isChecked(){
     const inputElements = document.getElementsByClassName('reponse');
     for(var i=0; inputElements[i]; ++i){
         if(inputElements[i].checked){
-            checkedBox.push(inputElements[i].name);
+            // checkedBox.push(inputElements[i].name);
+            checkedBox.push(i);
         }
     }
     return checkedBox
@@ -24,7 +25,7 @@ function sendData(event){
     const csrf  = $('input[name="csrfmiddlewaretoken"]').val()   // Mise en place du jeton csrf
     $.ajax({
         type: "POST",
-        url: 'quizz', // Nom de la vue de django 
+        url: 'nextQuestion', // Nom de la vue de django 
         data: {
             csrfmiddlewaretoken : csrf,
             // Les données à envoyer sous forme de dictionnaire
@@ -32,8 +33,12 @@ function sendData(event){
         },
         dataType: "json",
         success: function (data) {
-            // any process in data
             alert("successfull")
+            // departMinutes = 
+            // titre         = 
+            // intitule      = 
+            // listRep       = 
+            // updateTag()
         },
         failure: function () {
             alert("failure");

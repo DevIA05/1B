@@ -1,15 +1,14 @@
 {% extends 'quiz/main.html' %}
 
-{% block header %}
 {% load static %}
 
+{% block header %}
     <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
     <script
     src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
     crossorigin="anonymous" defer></script>
-    <script src="{% static 'js/timer.js' %}" defer></script>
-    <script src="{% static 'js/quizz.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'js/quizz.js' %}" defer></script>
  
 {% endblock %}
 {% block content %}
@@ -17,17 +16,11 @@
     <h1>QUIZ</h1>
     <div id="timer"></div>
 
-    <div class="container-quiz">
-        <p class="titre"> {{titre}} </p>
-        <p class="intitule"> {{intitule}} </p>
+    <div id="container-quiz">
+        <p id="titre"> </p>
+        <p id="intitule"> </p>
 
-        <div class="listReponse">
-            <div class="reponses">
-                {% for rep in reponses %}
-                <input name={{rep.1}} type="checkbox" class="reponse">
-                <label for={{rep.1}}>{{rep.0}}</label>
-                {% endfor %}
-            </div>
+        <div id="container-reponses">
         </div>
     </div>
     <form id="myForm" method="POST">
@@ -35,9 +28,30 @@
         <button type="submit">Valider</button>
     </form>
 
+    <script type="text/javascript">
+        const titre         = '{{titre}}';
+        const departMinutes = {{duree}};
+        const intitule      = '{{intitule}}'; 
+        const listRep       = {{reponses|safe}}; 
 
-    <script>
-        const departMinutes = {{duree}}
+        const containerRep  = document.getElementById("container-reponses");
+
+        function updateTag(){
+            document.getElementById("titre").innerHTML    = titre
+            document.getElementById("intitule").innerHTML = intitule
+            const tagsRep = document.createElement("div");
+            for (let r = 0; r < listRep.length; r++) {
+                tagsRep.innerHTML  += `<input name=${r} type="checkbox" class="reponse">
+                                       <label for=${r}> ${listRep[r]} </label> `;
+              } 
+              containerRep.appendChild(tagsRep);
+
+        } 
+
+        updateTag() 
+ 
     </script>
+
+    <script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
 
 {% endblock %}
