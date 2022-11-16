@@ -4,20 +4,22 @@
 
 {% block header %}
     <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
+    <link rel="stylesheet" href="{% static 'css/timer.css' %}">
     <script
     src="https://code.jquery.com/jquery-3.6.1.min.js"
     integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-    crossorigin="anonymous" defer></script>
+    crossorigin="anonymous" defer></script> 
+    <script type="text/javascript" src="{% static 'js/timer.js' %}" defer></script>
     <script type="text/javascript" src="{% static 'js/quizz.js' %}" defer></script>
  
 {% endblock %}
 {% block content %}
 
     <h1>QUIZ</h1>
-    <div id="timer"></div>
+    <div id="app"></div>  <!-- tag du compte à rebours pour une question  -->
 
     <div id="container-quiz">
-        <p id="titre"> </p>
+        <p id="titre">  </p>
         <p id="intitule"> </p>
 
         <div id="container-reponses">
@@ -25,33 +27,15 @@
     </div>
     <form id="myForm" method="POST">
         {% csrf_token %}
-        <button type="submit">Valider</button>
+        <button id="valider" type="submit">Valider</button>
     </form>
 
+    <!-- Déclaration des variables -->
     <script type="text/javascript">
-        const titre         = '{{titre}}';
-        const departMinutes = {{duree}};
-        const intitule      = '{{intitule}}'; 
-        const listRep       = {{reponses|safe}}; 
-
-        const containerRep  = document.getElementById("container-reponses");
-
-        function updateTag(){
-            document.getElementById("titre").innerHTML    = titre
-            document.getElementById("intitule").innerHTML = intitule
-            const tagsRep = document.createElement("div");
-            for (let r = 0; r < listRep.length; r++) {
-                tagsRep.innerHTML  += `<input name=${r} type="checkbox" class="reponse">
-                                       <label for=${r}> ${listRep[r]} </label> `;
-              } 
-              containerRep.appendChild(tagsRep);
-
-        } 
-
-        updateTag() 
- 
+        let timerQuestion = {{duree}};
+        let titre         = "{{titre|safe}}";
+        let intitule      = "{{intitule|safe}}"; 
+        let listRep       = {{reponses|safe}};
     </script>
-
-    <script type="text/javascript" src="{% static 'js/timer.js' %}"></script>
 
 {% endblock %}
