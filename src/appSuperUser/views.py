@@ -60,14 +60,18 @@ def addcollabS(request,idsession):
     print(session)
     return render(request,'addCollabSession.html',context)
 
-
-def addcollabD(request):
-    
-    
-    histos=Historique()
-
 def assigner(request,idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
+    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    context={'qp':qp}
+    return render(request,'assigner.html',context)
+
+def assignerD(request,idsession):
+    c=request.POST['collab']
+    
+    session=Sessionquizz.objects.get(idsession=idsession)
+    return HttpResponseRedirect(reverse('tbd'))
+    
     
 def deleteS(request, idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
