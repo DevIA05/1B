@@ -17,16 +17,26 @@ from django.urls import reverse
 def tbd(request):
     context={}
     session=Sessionquizz.objects.all().values()
-    # print(session)
+    qq=Sessionquizz.objects.values_list('idquizz',flat=True)
+    
+    # import pdb; pdb.set_trace()
+    # qa=Quizz.objects.get(idquizz=qq)
+    qz=Quizz.objects.values_list('nomfichier',flat=True)
+    # print(qa)
+    # print(qq)
     context={'session':session}
+    # print(context)
     return render(request,'tbd_sc.html', context=context)
 
 def addS(request):
     context={}
     qz=Quizz.objects.values_list('idquizz',flat=True)
+    qq=Quizz.objects.values_list('idquizz',flat=True)
     
     
-    context={'qz':qz}
+    
+    
+    context={'qz':qz, 'qq':qq}
     
     return render(request,'addsession.html',context)
 
@@ -39,6 +49,7 @@ def addrecord(request):
     user=request.user
     session = Sessionquizz(idquizz_id=x, datecreation=y, dateexpiration=z, timer=w, evaluation=e, matricule_id=user.matricule)
     session.save()
+
     return HttpResponseRedirect(reverse('tbd'))
 
 def deleteS(request, idsession):

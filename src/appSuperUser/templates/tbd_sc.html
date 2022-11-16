@@ -22,12 +22,13 @@
                 </tr>
             </thead>
         {%for x in session%}
+        
         <tbody>
           <tr>
             <td>Session n°{{ x.idsession }}</td>
             <td>Quizz n°{{ x.idquizz_id }}</td>     
-              <td>{{ x.datecreation }}</td>
-            <td>{{ x.dateexpiration }}</td>
+              <td>{{ x.datecreation|date:"Y-m-d" }}</td>
+            <td>{{ x.dateexpiration |date:"Y-m-d" }}</td>
            
              {% if x.evaluation%}
             <td> Évaluation</td>
@@ -36,11 +37,12 @@
             <td> Entraînement</td>
             {% endif %} 
             <td>{{ x.timer }}</td>
-            <td><a class="btn btn-outline-warning" href="modification/{{x.idsession}}" role="button">Modifier</a></td>
+            <td><a class="btn btn-warning" href="modification/{{x.idsession}}" role="button">Modifier</a></td>
             <td> <a class="btn btn-danger" href="delete/{{x.idsession}}" role="button" onclick="return confirm('Êtes-vous sûr?')" >Effacer</a>  </td>  
           </tr>
         </tbody>
             {% endfor %}
+           
         </table>
           </div>
 

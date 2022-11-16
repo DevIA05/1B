@@ -16,10 +16,10 @@
 </select>
 <br><br>
 Date création:<br>
-<input name="dateC" value="{{ session.datecreation }}">
+<input name="dateC" value="{{ session.datecreation|date:"Y-m-d" }}">
 <br><br>
 Date Expiration:<br>
-<input name="dateE" value="{{ session.dateexpiration }}">
+<input name="dateE" value="{{ session.dateexpiration|date:"Y-m-d" }}">
 <br><br>
 Évaluation ?
 <input type="checkbox" name="eva" value="{{ session.evaluation }}">
