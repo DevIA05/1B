@@ -15,6 +15,7 @@ urlpatterns =[
     path('delete/<int:idsession>', views.deleteS, name='delete'),
     path('modification/<int:idsession>',views.modificationS,name='modification'),
     path('modification/updaterecord/<int:idsession>',views.updaterecord,name='updaterecord'),
+    
 ]
 
 

@@ -19,6 +19,7 @@
                   <th>Timer</th>
                   <th></th>
                   <th></th>
+                  <th></th>
                 </tr>
             </thead>
         {%for x in session%}
@@ -37,8 +38,10 @@
             <td> Entraînement</td>
             {% endif %} 
             <td>{{ x.timer }}</td>
+            <td> <a class="btn btn-primary" href="assigner/{{x.idsession}}" role="button">Assigner</a>  </td>  
             <td><a class="btn btn-warning" href="modification/{{x.idsession}}" role="button">Modifier</a></td>
-            <td> <a class="btn btn-danger" href="delete/{{x.idsession}}" role="button" onclick="return confirm('Êtes-vous sûr?')" >Effacer</a>  </td>  
+            <td> <a class="btn btn-danger" href="delete/{{x.idsession}}" role="button" onclick="return confirm('Êtes-vous sûr?')" >Effacer</a>  </td>
+            
           </tr>
         </tbody>
             {% endfor %}
@@ -49,7 +52,7 @@
           <footer class="container">
             <div class="row m-2">
               <a href="addsession/" class="col-sm mx-5 btn btn-success " role="button" data-bs-toggle="button" aria-pressed="true">Créer une session</a>
-              <a href="#" class="col-sm mx-5 btn btn-primary " role="button" data-bs-toggle="button" aria-pressed="true">Modifier un quizz</a>
+              {% comment %} <a href="#" class="col-sm mx-5 btn btn-primary " role="button" data-bs-toggle="button" aria-pressed="true">Modifier un quizz</a> {% endcomment %}
             </div>
         </footer>
 

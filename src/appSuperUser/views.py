@@ -9,7 +9,7 @@ from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
 from django.contrib.auth.decorators import login_required
-from quiz.models import Personnel, Collaborateur, Superuser, Secteur, Sessionquizz
+from quiz.models import Personnel, Collaborateur, Superuser, Secteur, Sessionquizz, Historique
 from django.urls import reverse
 
 
@@ -30,13 +30,11 @@ def tbd(request):
 
 def addS(request):
     context={}
+    session=Sessionquizz.objects.all().values()
     qz=Quizz.objects.values_list('idquizz',flat=True)
-    qq=Quizz.objects.values_list('idquizz',flat=True)
-    
-    
-    
-    
-    context={'qz':qz, 'qq':qq}
+    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    # print(qp)
+    context={'qz':qz, 'qp':qp,'session':session}
     
     return render(request,'addsession.html',context)
 
@@ -46,12 +44,31 @@ def addrecord(request):
     z = request.POST['dateE']
     w = request.POST['timer']
     e = request.POST['eva']
+    c=request.POST['collab']
     user=request.user
     session = Sessionquizz(idquizz_id=x, datecreation=y, dateexpiration=z, timer=w, evaluation=e, matricule_id=user.matricule)
     session.save()
-
+    # return HttpResponseRedirect(reverse('collab'))
     return HttpResponseRedirect(reverse('tbd'))
 
+def addcollabS(request,idsession):
+    sessionQ=Sessionquizz.objects.get(idsession=idsession)
+    sess=Sessionquizz.objects.all().values()
+    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    context={'qp':qp,'sessionQ':sessionQ,'sess':sess,'session':session}
+    session=Sessionquizz.objects.values_list('idsession',flat=True).last()
+    print(session)
+    return render(request,'addCollabSession.html',context)
+
+
+def addcollabD(request):
+    
+    
+    histos=Historique()
+
+def assigner(request,idsession):
+    session= Sessionquizz.objects.get(idsession=idsession)
+    
 def deleteS(request, idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
     session.delete()
