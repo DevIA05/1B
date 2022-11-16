@@ -25,12 +25,10 @@ def initQuiz(request):
     # bonneRep    = data["questionnaire"]["question"][numQuestion]["@bonne"]
 
 def nextQuestion(request):
-    
     if request.method == "POST":
         data = request.session.get("quiz")
         request.session["numQuestion"] = request.session.get('numQuestion') + 1
         context = dataToDict(data, request.session.get('numQuestion'))
-        #pdb.set_trace()
         return JsonResponse({"data":context})
 
 
@@ -39,17 +37,13 @@ def dataToDict(data, numQuestion):
     titre       = data["questionnaire"]["question"][numQuestion]["titre"]
     intitule    = data["questionnaire"]["question"][numQuestion]["intitule"]
     reponses    = data["questionnaire"]["question"][numQuestion]['listerep']["reponse"]
-    # nbReponses  = list(range(1, len(reponses)+1))
-
     context={"duree"       : duree,
              "titre"       : titre,
              "intitule"    : intitule,
-             "reponses"    : reponses} #zip(reponses, nbReponses),
-            #  "numQuestion" : numQuestion}
-
+             "reponses"    : reponses}
     return context
 
 def convertTimeToMin(t): 
     s = t.split(':'); 
-    min = float(s[0])*60+float(s[1])+float(s[2])/60; 
+    min = float(s[0])*3600+float(s[1])*60+float(s[2]);  
     return min
