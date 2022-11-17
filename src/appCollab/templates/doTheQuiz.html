@@ -1,39 +1,41 @@
 {% extends 'quiz/main.html' %}
 
-{% block header %}
 {% load static %}
 
+{% block header %}
     <link rel="stylesheet" href="{% static 'css/quiz.css' %}">
-    <script src="{% static 'js/timer.js' %}" defer></script>
+    <link rel="stylesheet" href="{% static 'css/timer.css' %}">
+    <script
+    src="https://code.jquery.com/jquery-3.6.1.min.js"
+    integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+    crossorigin="anonymous" defer></script> 
+    <script type="text/javascript" src="{% static 'js/timer.js' %}" defer></script>
+    <script type="text/javascript" src="{% static 'js/quizz.js' %}" defer></script>
  
 {% endblock %}
 {% block content %}
 
     <h1>QUIZ</h1>
-    <div id="timer"></div>
+    <div id="app"></div>  <!-- tag du compte à rebours pour une question  -->
 
-    <div class="container-quiz">
-        <p class="titre"> {{titre}} </p>
-        <p class="intitule"> {{intitule}} </p>
+    <div id="container-quiz">
+        <p id="titre">  </p>
+        <p id="intitule"> </p>
 
-        <div class="listReponse">
-            <div class="reponses">
-                {% for rep in reponses %}
-                <input name={{"rep"}}{{rep.1}} type="checkbox" id="reponse">
-                <label for={{"rep"}}{{rep.1}}>{{rep.0}}</label>
-                {% endfor %}
-            </div>
+        <div id="container-reponses">
         </div>
     </div>
     <form id="myForm" method="POST">
         {% csrf_token %}
-        <button type="submit">Valider</button>
+        <button id="valider" type="submit">Valider</button>
     </form>
 
-    <script>
-        const departMinutes = {{duree}}
+    <!-- Déclaration des variables -->
+    <script type="text/javascript">
+        let timerQuestion = {{duree}};
+        let titre         = "{{titre|safe}}";
+        let intitule      = "{{intitule|safe}}"; 
+        let listRep       = {{reponses|safe}};
     </script>
-
-
 
 {% endblock %}
