@@ -1,16 +1,23 @@
-from django.http import HttpResponse
+from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
 from django.shortcuts import render
-from quiz.models import Quizz, Personnel, Collaborateur, Superuser
+from quiz.models import Quizz, Personnel, Collaborateur, Superuser, Sessionquizz
 import json, os
 from django.http import JsonResponse
 import pdb
+from django.urls import reverse
 
 def pa1(request):
-    return render(request, 'page_accueil.html')
+    session=Sessionquizz.objects.all().values()
+    context={'session':session}
+    return render(request, 'page_accueil.html',context)
+    
 
-def ce(request):
-    return render(request, 'condi_exam.html')
+def ce(request, idsession):
+    session= Sessionquizz.objects.get(idsession=idsession)
+    context={'session':session}
+    print(idsession)
+    return render(request, 'condi_exam.html',context)
 
 
 def initQuiz(request):
