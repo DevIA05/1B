@@ -41,7 +41,7 @@ function showCheckboxes() {
     <div id="checkboxes">
         {% for n in qp%}
         <label for="{{n}}">
-            <input type="checkbox" id="{{n}}" />{{n}}</label>
+            <input name='CC' type="checkbox" id="{{n}}" value="{{ n }}" />{{n}}</label>
         {%endfor%}  
     </div>
   </div>

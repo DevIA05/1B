@@ -51,25 +51,29 @@ def addrecord(request):
     # return HttpResponseRedirect(reverse('collab'))
     return HttpResponseRedirect(reverse('tbd'))
 
-def addcollabS(request,idsession):
-    sessionQ=Sessionquizz.objects.get(idsession=idsession)
-    sess=Sessionquizz.objects.all().values()
-    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
-    context={'qp':qp,'sessionQ':sessionQ,'sess':sess,'session':session}
-    session=Sessionquizz.objects.values_list('idsession',flat=True).last()
-    print(session)
-    return render(request,'addCollabSession.html',context)
+# def addcollabS(request,idsession):
+#     sessionQ=Sessionquizz.objects.get(idsession=idsession)
+#     sess=Sessionquizz.objects.all().values()
+#     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+#     context={'qp':qp,'sessionQ':sessionQ,'sess':sess,'session':session}
+#     session=Sessionquizz.objects.values_list('idsession',flat=True).last()
+#     print(session)
+#     return render(request,'addCollabSession.html',context)
 
 def assigner(request,idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
+    
     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
-    context={'qp':qp}
+    context={'qp':qp,'session':session}
     return render(request,'assigner.html',context)
 
 def assignerD(request,idsession):
-    c=request.POST['collab']
-    
-    session=Sessionquizz.objects.get(idsession=idsession)
+    session= Sessionquizz.objects.get(idsession=idsession)
+    idS=session.idsession
+    c=request.POST['CC']
+    for x in c:
+        x=Historique(idsession_id=idS,matricule_id=c)
+        x.save()
     return HttpResponseRedirect(reverse('tbd'))
     
     
