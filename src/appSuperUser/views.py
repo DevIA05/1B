@@ -18,14 +18,10 @@ def tbd(request):
     context={}
     session=Sessionquizz.objects.all().values()
     qq=Sessionquizz.objects.values_list('idquizz',flat=True)
-    
     # import pdb; pdb.set_trace()
     # qa=Quizz.objects.get(idquizz=qq)
     qz=Quizz.objects.values_list('nomfichier',flat=True)
-    # print(qa)
-    # print(qq)
     context={'session':session}
-    # print(context)
     return render(request,'tbd_sc.html', context=context)
 
 def addS(request):
@@ -51,20 +47,14 @@ def addrecord(request):
     # return HttpResponseRedirect(reverse('collab'))
     return HttpResponseRedirect(reverse('tbd'))
 
-# def addcollabS(request,idsession):
-#     sessionQ=Sessionquizz.objects.get(idsession=idsession)
-#     sess=Sessionquizz.objects.all().values()
-#     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
-#     context={'qp':qp,'sessionQ':sessionQ,'sess':sess,'session':session}
-#     session=Sessionquizz.objects.values_list('idsession',flat=True).last()
-#     print(session)
-#     return render(request,'addCollabSession.html',context)
 
 def assigner(request,idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
-    
+    histo=Historique.objects.filter(idsession_id=idsession)
     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
-    context={'qp':qp,'session':session}
+    qc=Personnel.objects.filter(collaborateur__matricule='00').values()
+    print(qc)
+    context={'qp':qp,'session':session, 'histo':histo}
     return render(request,'assigner.html',context)
 
 def assignerD(request,idsession):
@@ -81,6 +71,11 @@ def deleteS(request, idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
     session.delete()
     return HttpResponseRedirect(reverse('tbd'))
+def deleteC(request, idhisto):
+    histo= Historique.objects.get(idhisto=idhisto)
+    
+    histo.delete()
+    return HttpResponseRedirect(reverse('assigner'))
 
 def modificationS(request, idsession):
     session=Sessionquizz.objects.get(idsession=idsession)

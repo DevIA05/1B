@@ -12,11 +12,12 @@ urlpatterns =[
     path('accueil', views.pa, name='pa'),
     path('addsession/',views.addS, name='addS'),
     path('addsession/addrecord/', views.addrecord, name='addrecord'),
-    path('delete/<int:idsession>', views.deleteS, name='delete'),
+    path('delete/<int:idsession>', views.deleteS, name='deleteS'),
     path('modification/<int:idsession>',views.modificationS,name='modification'),
     path('modification/updaterecord/<int:idsession>',views.updaterecord,name='updaterecord'),
     path('assigner/<int:idsession>',views.assigner,name='assigner'),
     path('assigner/done/<int:idsession>',views.assignerD,name='assignerD'),
+    path('assigner/delete/<int:idhisto>', views.deleteC, name='deleteC'),
     
 ]
 

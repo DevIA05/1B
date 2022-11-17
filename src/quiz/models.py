@@ -105,6 +105,7 @@ class Historique(models.Model):
 
     class Meta:
         db_table = 'historique'
+        unique_together = ('matricule', 'idsession',)
 
 
 
