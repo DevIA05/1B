@@ -24,10 +24,9 @@ def initQuiz(request):
     request.session['quiz'] = data
     request.session['numQuestion'] = 0
     context = dataToDict(request.session.get('quiz'), request.session.get('numQuestion'))
-
+    context.update({"totalQ": len(data["questionnaire"]["question"])})
     return render(request, 'doTheQuiz.html', context=context)
-    # coeff       = data["questionnaire"]["question"][numQuestion]["@coeff"]
-    # bonneRep    = data["questionnaire"]["question"][numQuestion]["@bonne"]
+
 
 # **
 # Submit next question
@@ -36,11 +35,18 @@ def initQuiz(request):
 def nextQuestion(request):
     if request.method == "POST":
         data = request.session.get("quiz")
-        request.session["numQuestion"] = request.session.get('numQuestion') + 1
-        verifResponses(request.POST.getlist('result[]', False))
+        numQuestion =  request.session.get('numQuestion') 
+        print(str(numQuestion) + "/" + str(len(data["questionnaire"]["question"])-1))
+        if(numQuestion < len(data["questionnaire"]["question"])-1):
+            repUser = request.POST.getlist('result[]', False)
+            verifResponses(data, repUser, numQuestion)
+            request.session["numQuestion"] = numQuestion + 1
+            context = dataToDict(data, numQuestion + 1)
+            return JsonResponse({"data":context})
+        else:
+            print("goToNextViews")
+            
         
-        context = dataToDict(data, request.session.get('numQuestion'))
-        return JsonResponse({"data":context})
 
 # ** 
 # Extracts data from quiz
@@ -54,7 +60,8 @@ def dataToDict(data, numQuestion):
     context={"duree"       : duree,
              "titre"       : titre,
              "intitule"    : intitule,
-             "reponses"    : reponses}
+             "reponses"    : reponses,
+             "numQuestion" : numQuestion}
     return context
 
 #**
@@ -66,5 +73,15 @@ def convertTimeToSec(t):
     sec = float(s[0])*3600+float(s[1])*60+float(s[2]);  
     return sec
 
-def verifResponses(l):
-    pass
+def verifResponses(data, repUser, numQuestion):
+    bonneRep = data["questionnaire"]["question"][numQuestion]["@bonne"]
+    coeff    = data["questionnaire"]["question"][numQuestion]["@coeff"]
+    point    = 0 
+    if(repUser):
+        if(len(repUser) != len(bonneRep)): 
+            if(bonneRep == repUser[0]):
+                point = 1*coeff
+    return point
+        
+        
+    
