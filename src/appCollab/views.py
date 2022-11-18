@@ -14,9 +14,10 @@ def pa1(request):
     
 
 def ce(request, idsession):
-    session= Sessionquizz.objects.get(idsession=idsession)
-    context={'session':session}
     print(idsession)
+    request.session["idsession"]=idsession
+    context={'session':idsession}
+   
     return render(request, 'condi_exam.html',context)
 
 # ** 
@@ -26,7 +27,11 @@ def ce(request, idsession):
 # - pointsDuCandidat(int): score of the candidate over the questions
 # **
 def initQuiz(request):
-    with open("qjson/31.quv.json") as f: data = json.load(f)
+    idsession=request.session.get("idsession")
+    session= Sessionquizz.objects.get(idsession=idsession)
+    file=Quizz.objects.get(idquizz=session.idquizz_id)
+    
+    with open(file.urlfichier) as f: data = json.load(f)
     request.session['pointsDuCandidat'] = 0
     request.session['quiz'] = data
     request.session['numQuestion'] = 0
