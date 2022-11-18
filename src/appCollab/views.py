@@ -27,11 +27,11 @@ def ce(request, idsession):
 # - pointsDuCandidat(int): score of the candidate over the questions
 # **
 def initQuiz(request):
-    idsession=request.session.get("idsession")
-    session= Sessionquizz.objects.get(idsession=idsession)
-    file=Quizz.objects.get(idquizz=session.idquizz_id)
+    # idsession=request.session.get("idsession")
+    # session= Sessionquizz.objects.get(idsession=idsession)
+    file="qjson/31.quv.json" #Quizz.objects.get(idquizz=session.idquizz_id)
     
-    with open(file.urlfichier) as f: data = json.load(f)
+    with open(file) as f: data = json.load(f) # .urlfichier
     request.session['pointsDuCandidat'] = 0
     request.session['quiz'] = data
     request.session['numQuestion'] = 0
@@ -52,6 +52,7 @@ def nextQuestion(request):
         print(request.session.get('pointsDuCandidat'))
         if(numQuestion < len(data["questionnaire"]["question"])):
             repUser = request.POST.getlist('result[]', False)
+            pdb.set_trace()
             request.session["pointsDuCandidat"]  = verifResponses(data, repUser, numQuestion)
             request.session["numQuestion"] = numQuestion + 1
             context = dataToDict(data, numQuestion + 1)
@@ -60,7 +61,6 @@ def nextQuestion(request):
             return redirect('score')
             
 def score(request):
-    
     return render(request, 'finQuizz.html', context={"score": request.session.get('pointsDuCandidat')})    
 
 # ** 

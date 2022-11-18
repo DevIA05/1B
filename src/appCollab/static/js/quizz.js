@@ -4,9 +4,9 @@
 function isChecked(){
     let checkedBox = []; 
     const inputElements = document.getElementsByClassName('reponse');
-    for(var i=0; inputElements[i]; ++i){
+    for(var i=0; i < inputElements[i].length; ++i){
         if(inputElements[i].checked){
-            checkedBox.push(i);
+            checkedBox.push(inputElements[i].getAttribute("name"));
         }
     }
     return checkedBox
