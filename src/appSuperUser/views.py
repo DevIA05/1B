@@ -40,7 +40,6 @@ def addrecord(request):
     z = request.POST['dateE']
     w = request.POST['timer']
     e = request.POST['eva']
-    c=request.POST['collab']
     user=request.user
     session = Sessionquizz(idquizz_id=x, datecreation=y, dateexpiration=z, timer=w, evaluation=e, matricule_id=user.matricule)
     session.save()
@@ -53,7 +52,7 @@ def assigner(request,idsession):
     histo=Historique.objects.filter(idsession_id=idsession)
     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
     qc=Personnel.objects.filter(collaborateur__matricule='00').values()
-    print(qc)
+    # print(qc)
     context={'qp':qp,'session':session, 'histo':histo}
     return render(request,'assigner.html',context)
 
@@ -75,7 +74,7 @@ def deleteC(request, idhisto):
     histo= Historique.objects.get(idhisto=idhisto)
     
     histo.delete()
-    return HttpResponseRedirect(reverse('assigner'))
+    return HttpResponseRedirect(reverse('tbd'))
 
 def modificationS(request, idsession):
     session=Sessionquizz.objects.get(idsession=idsession)
