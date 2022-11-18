@@ -1,6 +1,6 @@
 from django.http import HttpResponse, HttpResponseRedirect
 from django.template import loader
-from django.shortcuts import render
+from django.shortcuts import render, redirect
 from quiz.models import Quizz, Personnel, Collaborateur, Superuser, Sessionquizz
 import json, os
 from django.http import JsonResponse
@@ -49,16 +49,19 @@ def nextQuestion(request):
         data = request.session.get("quiz")
         numQuestion =  request.session.get('numQuestion') 
         print(str(numQuestion) + "/" + str(len(data["questionnaire"]["question"])-1))
-        if(numQuestion < len(data["questionnaire"]["question"])-1):
+        print(request.session.get('pointsDuCandidat'))
+        if(numQuestion < len(data["questionnaire"]["question"])):
             repUser = request.POST.getlist('result[]', False)
-            verifResponses(data, repUser, numQuestion)
+            request.session["pointsDuCandidat"]  = verifResponses(data, repUser, numQuestion)
             request.session["numQuestion"] = numQuestion + 1
             context = dataToDict(data, numQuestion + 1)
             return JsonResponse({"data":context})
         else:
-            print("goToNextViews")
+            return redirect('score')
             
-        
+def score(request):
+    
+    return render(request, 'finQuizz.html', context={"score": request.session.get('pointsDuCandidat')})    
 
 # ** 
 # Extracts data from quiz

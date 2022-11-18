@@ -71,9 +71,9 @@ function updateTag(){
     containerRep.innerHTML = ""; // empty the div of its children to add the new answers whose number of answers can be more 
                                  //   or less than the answers of the previous question
     const tagsRep = document.createElement("div");
-    for (let r = 1; r < listRep.length+1; r++) {
-        tagsRep.innerHTML  += `<input name=${r} type="checkbox" class="reponse">
-                               <label for=${r}> ${listRep[r]} </label> `;
+    for (let r = 0; r < listRep.length; r++) {
+        tagsRep.innerHTML  += `<input name=${r+1} type="checkbox" class="reponse">
+                               <label for=${r+1}> ${listRep[r]} </label> `;
       } 
       containerRep.appendChild(tagsRep);
 
