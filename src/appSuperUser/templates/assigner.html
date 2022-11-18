@@ -65,33 +65,52 @@ function showCheckboxes() {
 
 </table>
 
-
-
+<div class="row">
+  <div class="col">
+ <h4>Choix des collaborateurs à assigner</h4>
 <table class="table table-dark table-hover w-auto ">
-  <thead class="thead-light">
-  <tr>
-    <th>Matricule</th>
-    <th>Score</th>
-    <th>Date Participation</th>
-    <th></th>
-  </tr>
-</thead>
-{%for x in histo%}
+ 
+{%for n in qp%}
 <tbody>
   <tr>
-  <td>Matricule n°{{ x.matricule_id }}</td>
-  <td>{{ x.idquizz_id }}</td>     
-  <td>{{ x.datecreation|date:"Y-m-d" }}</td>
-  <td> <a class="btn btn-danger" href="delete/{{x.idhisto}}" role="button" onclick="return confirm('Êtes-vous sûr?')" >Retirer</a>  </td>
+  <td>Matricule n°{{ n }}</td>
+
+  <td> <a class="btn btn-success" href="ajouter/{{n}}" role="button">Assigner</a>  </td>
 
   </tr>
   </tbody>
   {% endfor %}
   
   </table>
+</div>
+<div class="col">
+  <h4>Collaborateurs actuellement assignés</h4>
+  <table class="table table-dark table-hover w-auto ">
+    <thead class="thead-light">
+    <tr>
+      <th>Matricule</th>
+      <th>Score</th>
+      <th>Date Participation</th>
+      <th></th>
+    </tr>
+  </thead>
+  {%for x in histo%}
+  <tbody>
+    <tr>
+    <td>Matricule n°{{ x.matricule_id }}</td>
+    <td>{{ x.idquizz_id }}</td>     
+    <td>{{ x.datecreation|date:"Y-m-d" }}</td>
+    <td> <a class="btn btn-danger" href="delete/{{x.idhisto}}" role="button" onclick="return confirm('Êtes-vous sûr?')" >Retirer</a>  </td>
+  
+    </tr>
+    </tbody>
+    {% endfor %}
+    
+    </table>
+  </div>
+</div>
 
-
-<form action="done/{{ session.idsession }}" method="post">
+{% comment %} <form action="done/{{ session.idsession }}" method="post">
 {% csrf_token %}
 <div class="multiselect">
     <div class="selectBox" onclick="showCheckboxes()">
@@ -109,7 +128,7 @@ function showCheckboxes() {
   </div>
   <br>
   <input type="submit" value="Valider">
-  </form>
+  </form> {% endcomment %}
 
 </div>
 </section>

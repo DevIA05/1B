@@ -28,9 +28,9 @@ def addS(request):
     context={}
     session=Sessionquizz.objects.all().values()
     qz=Quizz.objects.values_list('idquizz',flat=True)
-    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    # qp=Collaborateur.objects.values_list('matricule_id',flat=True)
     # print(qp)
-    context={'qz':qz, 'qp':qp,'session':session}
+    context={'qz':qz, 'session':session}
     
     return render(request,'addsession.html',context)
 
@@ -48,12 +48,13 @@ def addrecord(request):
 
 
 def assigner(request,idsession):
-    session= Sessionquizz.objects.get(idsession=idsession)
+    request.session['idsession']=idsession
+    
     histo=Historique.objects.filter(idsession_id=idsession)
     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
-    qc=Personnel.objects.filter(collaborateur__matricule='00').values()
-    # print(qc)
-    context={'qp':qp,'session':session, 'histo':histo}
+    # qc=Personnel.objects.filter(collaborateur__matricule='00').values()
+    # print(qp)
+    context={'qp':qp,'histo':histo}
     return render(request,'assigner.html',context)
 
 def assignerD(request,idsession):
@@ -64,17 +65,25 @@ def assignerD(request,idsession):
         x=Historique(idsession_id=idS,matricule_id=c)
         x.save()
     return HttpResponseRedirect(reverse('tbd'))
-    
+ 
+def ajouter(request,matricule):
+    idsession=request.session.get("idsession")
+    mat=Collaborateur.objects.get(matricule_id=matricule)
+    histo=Historique(idsession_id=idsession,matricule=mat)
+    histo.save()
+    # context={'session':session}
+    return HttpResponseRedirect(reverse('assigner',kwargs={'idsession':idsession}))
     
 def deleteS(request, idsession):
     session= Sessionquizz.objects.get(idsession=idsession)
     session.delete()
     return HttpResponseRedirect(reverse('tbd'))
+
 def deleteC(request, idhisto):
     histo= Historique.objects.get(idhisto=idhisto)
-    
+    idsession=request.session.get("idsession")
     histo.delete()
-    return HttpResponseRedirect(reverse('tbd'))
+    return HttpResponseRedirect(reverse('assigner',kwargs={'idsession':idsession}))
 
 def modificationS(request, idsession):
     session=Sessionquizz.objects.get(idsession=idsession)

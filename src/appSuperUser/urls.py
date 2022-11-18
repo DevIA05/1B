@@ -18,6 +18,7 @@ urlpatterns =[
     path('assigner/<int:idsession>',views.assigner,name='assigner'),
     path('assigner/done/<int:idsession>',views.assignerD,name='assignerD'),
     path('assigner/delete/<int:idhisto>', views.deleteC, name='deleteC'),
+    path('assigner/ajouter/<int:matricule>', views.ajouter, name='ajouter'),
     
 ]
 
