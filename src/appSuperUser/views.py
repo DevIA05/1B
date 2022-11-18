@@ -136,10 +136,6 @@ def delete(dossier):
         for d in dirs:
             shutil.rmtree(os.path.join(root, d))
 
-
-# def addEmp(request):
-#     return render(request, 'addEmployee.html', {})
-
 def addEmp(request):
     return render(request, 'addEmployee.html', {})
 
