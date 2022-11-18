@@ -1,5 +1,8 @@
 // Credit: Mateusz Rybczonec
 
+// --------------------------------------------------
+// Variable --------------------------------------------------
+// --------------------------------------------------
 const FULL_DASH_ARRAY = 283;
 const WARNING_THRESHOLD = 10;
 const ALERT_THRESHOLD = 5;
@@ -27,8 +30,9 @@ let remainingPathColor;
 
 const app = document.getElementById("app")
 
-initTimer()
-startTimer();
+// --------------------------------------------------
+// Function --------------------------------------------------
+// --------------------------------------------------
 
 function initTimer(){  
   TIME_LIMIT = timerQuestion;
@@ -125,3 +129,9 @@ function setCircleDasharray() {
     .getElementById("base-timer-path-remaining")
     .setAttribute("stroke-dasharray", circleDasharray);
 }
+
+// --------------------------------------------------
+// Trigger function --------------------------------------------------
+// --------------------------------------------------
+initTimer();
+startTimer();
