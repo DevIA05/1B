@@ -51,9 +51,11 @@ def assigner(request,idsession):
     request.session['idsession']=idsession
     session=Sessionquizz.objects.get(idsession=idsession)
     histo=Historique.objects.filter(idsession_id=idsession)
-    qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    qp=Collaborateur.objects.filter(historique__isnull=True).values_list('matricule_id',flat=True)
+    test=Collaborateur.objects.select_related('matricule').values_list('matricule_id',flat=True)
+    t=Historique.objects.select_related('collaborateur').values_list('matricule_id',flat=True)
     # qc=Personnel.objects.filter(collaborateur__matricule='00').values()
-    # print(qp)
+    print(t)
     context={'qp':qp,'histo':histo,'session':session}
     return render(request,'assigner.html',context)
  
