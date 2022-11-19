@@ -17,6 +17,8 @@ from django.contrib import admin
 from django.urls import path, include
 from . import views
 from quiz.views import index
+from django.contrib import messages
+from django.shortcuts import redirect
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
@@ -26,7 +28,8 @@ def notAccessForCollaborateur(function):
     def wrapper(request, *args, **kw):
         user=request.user           # we get the user instance
         if(not user.isSuperUser()): # If user is not a superuser we redirect it to the unauthorized page of django
-            return HttpResponseRedirect('/unauthorized/')
+            messages.success(request, ("Vous n'êtes pas autorisé"))
+            return redirect('login')
         else:
             return function(request, *args, **kw)
     return wrapper

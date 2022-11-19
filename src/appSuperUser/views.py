@@ -17,10 +17,11 @@ from django.urls import reverse
 def tbd(request):
     context={}
     session=Sessionquizz.objects.all().values()
-    qq=Sessionquizz.objects.values_list('idquizz',flat=True)
+    # qq=Sessionquizz.objects.values_list('idquizz',flat=True)
     # import pdb; pdb.set_trace()
     # qa=Quizz.objects.get(idquizz=qq)
-    qz=Quizz.objects.values_list('nomfichier',flat=True)
+    # qz=Quizz.objects.values_list('nomfichier',flat=True)
+    # print(session)
     context={'session':session}
     return render(request,'tbd_sc.html', context=context)
 

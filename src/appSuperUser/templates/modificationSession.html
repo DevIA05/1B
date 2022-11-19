@@ -23,7 +23,7 @@ Date Expiration:<br>
 <br><br>
 Évaluation ?
 <input type="checkbox" name="eva" value="{{ session.evaluation }}">
-<input  type="hidden" value="{{ session.evaluation }}" name="eva">
+<input  type="hidden" value="False" name="eva">
 <br>
 Timer :<br>
 <input name="timer" value="{{ session.timer }}">
@@ -33,5 +33,24 @@ Timer :<br>
 </div>
 
 </section>
+
+<footer class="container">
+    <div class="container">
+      <div class="row">
+        <div class="col-sm">
+         
+        </div>
+        <div class="col-sm m-5">
+          <a href="../gestion-session" class=" btn btn-secondary " role="button" data-bs-toggle="button" aria-pressed="true">Retour</a>
+  
+        </div>
+        <div class="col-sm">
+         
+        </div>
+      </div>
+    </div>
+    
+   
+  </footer>
 
 {% endblock %}
