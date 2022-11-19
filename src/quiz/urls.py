@@ -46,8 +46,8 @@ urlpatterns = [
     path('p2', login_required()(notAccessForCollaborateur(views.page2)), name="p2"),
     path('p3', views.page3, name="p3"),
     path('quiz/q', views.quiz, name="quiz"),
-    path('quizz/superuser/', include("appSuperUser.urls")),
-    path('quizz/collaborateur/', include('appCollab.urls')),
+    path('quiz/superuser/',include("appSuperUser.urls")),
+    path('quiz/collaborateur/', include('appCollab.urls')),
     path('test', views.test, name="test"),
 ]
 
