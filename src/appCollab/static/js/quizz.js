@@ -35,7 +35,7 @@ function updateTag(){
     const tagsRep = document.createElement("div");
     for (let r = 0; r < listRep.length; r++) {
         tagsRep.innerHTML  += `<input name=${r+1} type="checkbox" class="reponse">
-                               <label for=${r+1}> ${listRep[r]} </label> `;
+                               <label for=${r+1} class="labRep"> ${listRep[r]} </label> `;
       } 
       containerRep.appendChild(tagsRep);
 

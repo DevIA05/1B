@@ -101,6 +101,10 @@ def verifResponses(data, repUser, numQuestion):
                 point = 1*int(coeff)
     return point
         
+
+
+def trainquizz(request):
+    return render(request, 'trainQuizz.html')
         
 # --------------------------------------------------------------------------------------------------
 

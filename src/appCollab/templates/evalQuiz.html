@@ -16,19 +16,24 @@
 {% block content %}
 
     <h1>QUIZ</h1>
-    <div id="app"></div>  <!-- tag du compte à rebours pour une question  -->
 
     <div id="container-quiz">
-        <p id="titre">  </p> 
-        <p id="intitule"> </p>
+
+        <div id="container-header">
+            <div id="app"></div>  <!-- tag du compte à rebours pour une question  -->
+            <p id="titre">  </p> 
+            <p id="intitule"> </p>
+        </div>
 
         <div id="container-reponses">
         </div>
+
+        <form id="myForm" method="POST">
+            {% csrf_token %}
+            <button id="valider" type="submit">Valider</button>
+        </form>
+
     </div>
-    <form id="myForm" method="POST">
-        {% csrf_token %}
-        <button id="valider" type="submit">Valider</button>
-    </form>
 
     <!-- Déclaration des variables -->
     <script type="text/javascript"> 
