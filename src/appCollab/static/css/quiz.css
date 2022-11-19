@@ -1,14 +1,39 @@
-/* html {
+
+#container {
+    grid: auto-flow / 1fr 1fr 1fr;
     display: flex;
-    flex: 1;
     justify-content: center;
     align-items: center;
     height: 100%;
-  } */
-  
-  #timer {
-    font-weight: bold;
-    font-size: 4em;
-  }
-  
-  
+}
+
+#container-quiz{
+  width: 60%;
+}
+
+#container-header{
+
+}
+
+#app{
+
+}
+
+#titre{
+
+}
+
+#intitule{
+
+}
+
+#container-reponses{
+}
+
+#reponse{
+
+}
+
+#labRep{
+
+}
