@@ -49,22 +49,13 @@ def addrecord(request):
 
 def assigner(request,idsession):
     request.session['idsession']=idsession
-    
+    session=Sessionquizz.objects.get(idsession=idsession)
     histo=Historique.objects.filter(idsession_id=idsession)
     qp=Collaborateur.objects.values_list('matricule_id',flat=True)
     # qc=Personnel.objects.filter(collaborateur__matricule='00').values()
     # print(qp)
-    context={'qp':qp,'histo':histo}
+    context={'qp':qp,'histo':histo,'session':session}
     return render(request,'assigner.html',context)
-
-def assignerD(request,idsession):
-    session= Sessionquizz.objects.get(idsession=idsession)
-    idS=session.idsession
-    c=request.POST['CC']
-    for x in c:
-        x=Historique(idsession_id=idS,matricule_id=c)
-        x.save()
-    return HttpResponseRedirect(reverse('tbd'))
  
 def ajouter(request,matricule):
     idsession=request.session.get("idsession")
