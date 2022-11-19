@@ -27,17 +27,17 @@ def ce(request, idsession):
 # - pointsDuCandidat(int): score of the candidate over the questions
 # **
 def initQuiz(request):
-    idsession=request.session.get("idsession")
-    session= Sessionquizz.objects.get(idsession=idsession)
-    file=Quizz.objects.get(idquizz=session.idquizz_id)
+    # idsession=request.session.get("idsession")
+    # session= Sessionquizz.objects.get(idsession=idsession)
+    file="qjson/31.quv.json" #Quizz.objects.get(idquizz=session.idquizz_id)
     
-    with open(file.urlfichier) as f: data = json.load(f)
+    with open(file) as f: data = json.load(f) # .urlfichier
     request.session['pointsDuCandidat'] = 0
     request.session['quiz'] = data
     request.session['numQuestion'] = 0
     context = dataToDict(request.session.get('quiz'), request.session.get('numQuestion'))
     context.update({"totalQ": len(data["questionnaire"]["question"])})
-    return render(request, 'doTheQuiz.html', context=context)
+    return render(request, 'evalQuiz.html', context=context)
 
 
 # **
@@ -47,21 +47,19 @@ def initQuiz(request):
 def nextQuestion(request):
     if request.method == "POST":
         data = request.session.get("quiz")
-        numQuestion =  request.session.get('numQuestion') 
-        print(str(numQuestion) + "/" + str(len(data["questionnaire"]["question"])-1))
-        print(request.session.get('pointsDuCandidat'))
-        if(numQuestion < len(data["questionnaire"]["question"])):
-            repUser = request.POST.getlist('result[]', False)
-            request.session["pointsDuCandidat"]  = verifResponses(data, repUser, numQuestion)
-            request.session["numQuestion"] = numQuestion + 1
+        numQuestion =  request.session.get('numQuestion')
+        repUser = request.POST.getlist('result[]', False)
+        request.session["pointsDuCandidat"]  = request.session.get("pointsDuCandidat") + verifResponses(data, repUser, numQuestion)
+        if(numQuestion < len(data["questionnaire"]["question"])-1):
+            request.session["numQuestion"] = numQuestion +1
             context = dataToDict(data, numQuestion + 1)
             return JsonResponse({"data":context})
         else:
-            return redirect('score')
-            
+            return JsonResponse({"data":numQuestion})
+
 def score(request):
-    
-    return render(request, 'finQuizz.html', context={"score": request.session.get('pointsDuCandidat')})    
+    score =  request.session.get("pointsDuCandidat")
+    return render(request, 'finQuizz.html', context={"score":score})     
 
 # ** 
 # Extracts data from quiz
@@ -88,15 +86,34 @@ def convertTimeToSec(t):
     sec = float(s[0])*3600+float(s[1])*60+float(s[2]);  
     return sec
 
+#** Checks and assigns the point
+#**
 def verifResponses(data, repUser, numQuestion):
     bonneRep = data["questionnaire"]["question"][numQuestion]["@bonne"]
     coeff    = data["questionnaire"]["question"][numQuestion]["@coeff"]
     point    = 0 
+    # tests if the user has checked boxes
     if(repUser):
-        if(len(repUser) != len(bonneRep)): 
+        # test si le nombre de réponse attendu est le même nombre de case à coché
+        if(len(repUser) == len(bonneRep)): 
+            # checks if the correct answer corresponds to the checked box
             if(bonneRep == repUser[0]):
-                point = 1*coeff
+                point = 1*int(coeff)
     return point
         
         
-    
+# --------------------------------------------------------------------------------------------------
+
+def page1(request): 
+    # load and init data
+    request.session["nb"] = 0
+    context = {"nb": 0}
+    return render(request, 'page1.html', context)
+
+def incremente(request): 
+    request.session["nb"] = request.session.get("nb") +1
+    print(request.session.get("nb") +1)
+    return JsonResponse({"nb": request.session.get("nb")})
+
+def page2(request):
+    return render(request, "page2.html")  

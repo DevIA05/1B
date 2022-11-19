@@ -1,0 +1,45 @@
+{% extends 'quiz/main.html' %}
+
+{% load static %}
+
+{% block content %}
+
+<body>
+    <h1 id="title"> </h1>
+   
+       <form id="myForm" method="POST">
+           {% csrf_token %}
+           <button id="submit" type="submit">Valider</button>
+       </form>
+
+       <script
+       src="https://code.jquery.com/jquery-3.6.1.min.js"
+       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
+       crossorigin="anonymous" defer></script> 
+       
+    <script type="text/javascript">
+     document.getElementById("title").textContent = "{{nb}}"
+   
+   const form = document.getElementById('myForm')
+   form.addEventListener('submit', sendData);
+   function sendData(event){
+       event.preventDefault();
+       const csrf  = $('input[name="csrfmiddlewaretoken"]').val()
+       $.ajax({
+           type: "POST",
+           url: 'incremente', // 
+           data: { csrfmiddlewaretoken : csrf, "result": "data" },
+           dataType: "json",
+           success: function (data) {
+                 document.getElementById("title").textContent = data["nb"] 
+                 if(data["nb"] > 5){
+                    window.location.assign("{%url 'p2'%}")
+                 }
+                },
+           failure: function () {alert("failure");}
+       })
+   }
+   </script>
+    
+   </body>   
+   {% endblock%}

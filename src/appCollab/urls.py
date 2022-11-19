@@ -4,7 +4,10 @@ from . import views
 urlpatterns = [
     path('accueil', views.pa1, name='accueilCollab'),
     path('session/<int:idsession>', views.ce, name="conditionExamen"),
-    path('quizz', views.initQuiz, name="quizReal"),
+    path('eval-quizz', views.initQuiz, name="quizReal"),
     re_path(r'^nextQuestion$', views.nextQuestion),
-    path('score',views.score,name='score'),
+    path("score",views.score,name="score"),
+    path('page1', views.page1, name="p1"),
+    re_path(r'^incremente$', views.incremente),
+    path('page2',views.page2,name="p2"),
 ]
