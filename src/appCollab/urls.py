@@ -5,6 +5,7 @@ urlpatterns = [
     path('accueil', views.pa1, name='accueilCollab'),
     path('session/<int:idsession>', views.ce, name="conditionExamen"),
     path('eval-quizz', views.initQuiz, name="quizReal"),
+    path('train-quizz', views.trainquizz, name="trainQ"),
     re_path(r'^nextQuestion$', views.nextQuestion),
     path("score",views.score,name="score"),
     path('page1', views.page1, name="p1"),

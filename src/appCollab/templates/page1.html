@@ -2,44 +2,53 @@
 
 {% load static %}
 
+{% block header %}
+<style>
+    #container {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100%;
+    }
+    #container-reponses{
+        
+    }
+ </style>
+{% endblock %}
+
 {% block content %}
 
 <body>
-    <h1 id="title"> </h1>
-   
-       <form id="myForm" method="POST">
-           {% csrf_token %}
-           <button id="submit" type="submit">Valider</button>
-       </form>
 
-       <script
-       src="https://code.jquery.com/jquery-3.6.1.min.js"
-       integrity="sha256-o88AwQnZB+VDvE9tvIXrMQaPlFFSUTR+nldQm1LuPXQ="
-       crossorigin="anonymous" defer></script> 
-       
-    <script type="text/javascript">
-     document.getElementById("title").textContent = "{{nb}}"
+    <h1>QUIZ</h1>
+
+    <div id="container">
+
+        <div id="container-quizz">
+
+             <div id="container-header">
+                 <div id="temps"> ------- temps -------</div>  <!-- tag du compte à rebours pour une question  -->
+                 <p id="titre"> ---------- titre ------------- </p> 
+                 <p id="question"> -------------- question -------------- </p>
+             </div>
+         
+             <div id="container-reponses">
+                 <input name="1" type="checkbox" class="reponse"> <label for="1" class="labRep"> ------- r1 -------</label> 
+                 <input name="1" type="checkbox" class="reponse"> <label for="1" class="labRep"> ------- r2 -------</label> 
+                 <input name="1" type="checkbox" class="reponse"> <label for="1" class="labRep"> -------r3 -------</label> 
+                 <input name="1" type="checkbox" class="reponse"> <label for="1" class="labRep"> -------r4 -------</label> 
+             </div>
+         
+             <form id="myForm" method="POST">
+                 <button id="valider" type="submit">Valider</button>
+             </form>
+
+        </div>
+
+    </div>
+
    
-   const form = document.getElementById('myForm')
-   form.addEventListener('submit', sendData);
-   function sendData(event){
-       event.preventDefault();
-       const csrf  = $('input[name="csrfmiddlewaretoken"]').val()
-       $.ajax({
-           type: "POST",
-           url: 'incremente', // 
-           data: { csrfmiddlewaretoken : csrf, "result": "data" },
-           dataType: "json",
-           success: function (data) {
-                 document.getElementById("title").textContent = data["nb"] 
-                 if(data["nb"] > 5){
-                    window.location.assign("{%url 'p2'%}")
-                 }
-                },
-           failure: function () {alert("failure");}
-       })
-   }
-   </script>
-    
-   </body>   
+</body>   
    {% endblock%}
+
+
