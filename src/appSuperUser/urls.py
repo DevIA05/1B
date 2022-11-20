@@ -7,7 +7,7 @@ from django.conf.urls.static import static
 urlpatterns =[
     path('gestion-session', views.tbd, name='tbd'),
     path('uploadQuizz/', views.uploadQuizz, name='uploadQuizz'),
-    path('ajout-personnel/', views.addDataInDB, name='ajoutEmp'),
+    path('ajout-personnel', views.addDataInDB, name='ajoutEmp'),
     re_path(r'^addDataInDB$', views.addDataInDB, name='addDataInDB'),
     path('accueil', views.pa, name='pa'),
     path('addsession/',views.addS, name='addS'),
