@@ -8,8 +8,9 @@
 
 <form action="updaterecord/{{ session.idsession }}" method="post">
 {% csrf_token %}
+Changer de quizz:
 <select name="nquizz">
-    <option disabled="true" selected>Quizz défini: {{ session.idquizz_id }}  </option>
+    <option selected>{{ session.idquizz_id }}  </option>
     {% for q in qz%}
     <option>{{q}}</option>
     {%endfor%}  
@@ -22,8 +23,13 @@ Date Expiration:<br>
 <input name="dateE" value="{{ session.dateexpiration|date:"Y-m-d" }}">
 <br><br>
 Évaluation ?
-<input type="checkbox" name="eva" value="{{ session.evaluation }}">
+
 <input  type="hidden" value="False" name="eva">
+{% if session.evaluation%}
+<input type="checkbox" name="eva" value="True" checked>
+{% else%}
+<input type="checkbox" name="eva" value="True">
+{% endif %} 
 <br>
 Timer :<br>
 <input name="timer" value="{{ session.timer }}">
