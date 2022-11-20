@@ -22,6 +22,7 @@ from django.shortcuts import redirect
 
 from django.http import HttpResponseRedirect
 from django.contrib.auth.decorators import login_required
+from decorator_include import decorator_include
 
 # Custom Decoration: Prevent access to the page
 def notAccessForCollaborateur(function):
@@ -49,8 +50,8 @@ urlpatterns = [
     path('p2', login_required()(notAccessForCollaborateur(views.page2)), name="p2"),
     path('p3', views.page3, name="p3"),
     path('quiz/q', views.quiz, name="quiz"),
-    path('quiz/superuser/',include("appSuperUser.urls")),
-    path('quiz/collaborateur/', include('appCollab.urls')),
+    path('quiz/superuser/', decorator_include([login_required(login_url="login"), notAccessForCollaborateur], "appSuperUser.urls")),
+    path('quiz/collaborateur/', decorator_include([login_required(login_url="login")], "appCollab.urls")),
     path('test', views.test, name="test"),
 ]
 
