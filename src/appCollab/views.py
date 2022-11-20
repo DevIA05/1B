@@ -33,9 +33,9 @@ def initQuiz(request):
     
     with open(file) as f: data = json.load(f) # .urlfichier
     request.session['pointsDuCandidat'] = 0
-    request.session['quiz'] = data
+    request.session['quiz'] = data # quiz
     request.session['numQuestion'] = 0
-    context = dataToDict(request.session.get('quiz'), request.session.get('numQuestion'))
+    context = extractData(request.session.get('quiz'), request.session.get('numQuestion'))
     context.update({"totalQ": len(data["questionnaire"]["question"])})
     return render(request, 'evalQuiz.html', context=context)
 
@@ -46,14 +46,17 @@ def initQuiz(request):
 # **
 def nextQuestion(request):
     if request.method == "POST":
+        # Get data from session
         data = request.session.get("quiz")
         numQuestion =  request.session.get('numQuestion')
         repUser = request.POST.getlist('result[]', False)
         request.session["pointsDuCandidat"]  = request.session.get("pointsDuCandidat") + verifResponses(data, repUser, numQuestion)
+        # if this is not the last question then
         if(numQuestion < len(data["questionnaire"]["question"])-1):
             request.session["numQuestion"] = numQuestion +1
-            context = dataToDict(data, numQuestion + 1)
+            context = extractData(data, numQuestion + 1)
             return JsonResponse({"data":context})
+        # if this is the last question then
         else:
             return JsonResponse({"data":numQuestion})
 
@@ -65,7 +68,7 @@ def score(request):
 # Extracts data from quiz
 # return(dict) with only the elements for the realization of the quiz
 # **
-def dataToDict(data, numQuestion):
+def extractData(data, numQuestion):
     duree       = convertTimeToSec(data["questionnaire"]["question"][numQuestion]["@duree"])
     titre       = data["questionnaire"]["question"][numQuestion]["titre"]
     intitule    = data["questionnaire"]["question"][numQuestion]["intitule"]
