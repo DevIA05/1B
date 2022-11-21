@@ -66,6 +66,9 @@ class Personnel(AbstractBaseUser): #models.Model #AbstractBaseUser
     def isSuperUser(self):
         return Superuser.objects.filter(matricule=self.matricule).exists()
     
+    def isCollabUser(self):
+        return Collaborateur.objects.filter(matricule=self.matricule).exists()
+    
     def __str__(self):
         return '%s %s (%s)' % (self.prenom, self.nom, self.codesecteur.codesecteur) 
     
@@ -95,13 +98,14 @@ class Superuser(models.Model):
 
 class Historique(models.Model):
     idhisto = models.AutoField(db_column='idHisto', primary_key=True)  # Field name made lowercase.
-    matricule = models.ForeignKey(Collaborateur, models.DO_NOTHING, db_column='matricule')
-    idsession = models.ForeignKey('Sessionquizz', models.DO_NOTHING, db_column='idSession')  # Field name made lowercase.
+    matricule = models.ForeignKey(Collaborateur, on_delete=models.CASCADE, db_column='matricule')
+    idsession = models.ForeignKey('Sessionquizz', on_delete=models.CASCADE, db_column='idSession')  # Field name made lowercase.
     score = models.IntegerField(blank=True, null=True)
     dateparticipation = models.DateField(db_column='dateParticipation', blank=True, null=True)  # Field name made lowercase.
 
     class Meta:
         db_table = 'historique'
+        unique_together = ('matricule', 'idsession',)
 
 
 
@@ -109,8 +113,8 @@ class Quizz(models.Model):
     idquizz = models.AutoField(db_column='idQuizz', primary_key=True)  # Field name made lowercase.
     nomfichier = models.CharField(db_column='nomFichier', max_length=30)  # Field name made lowercase.
     urlfichier = models.CharField(db_column='urlFichier', max_length=200)  # Field name made lowercase.
-    codesecteur = models.ForeignKey('Secteur', models.DO_NOTHING, db_column='codesecteur')  # Field name made lowercase.
-    matricule = models.ForeignKey('Superuser', models.DO_NOTHING, db_column='matricule', blank=True, null=True)
+    codesecteur = models.ForeignKey('Secteur', on_delete=models.CASCADE, db_column='codesecteur',blank=True, null=True)  # Field name made lowercase.
+    matricule = models.ForeignKey('Superuser', on_delete=models.CASCADE, db_column='matricule', blank=True, null=True)
 
     class Meta:
         db_table = 'quizz'
@@ -123,7 +127,7 @@ class Sessionquizz(models.Model):
     datecreation = models.DateField(db_column='dateCreation')  # Field name made lowercase.
     dateexpiration = models.DateField(db_column='dateExpiration', blank=True, null=True)  # Field name made lowercase.
     matricule = models.ForeignKey('Superuser', models.DO_NOTHING, db_column='matricule')
-    idquizz = models.ForeignKey(Quizz, models.DO_NOTHING, db_column='idQuizz')  # Field name made lowercase.
+    idquizz = models.ForeignKey(Quizz, db_column='idQuizz',on_delete=models.CASCADE)  # Field name made lowercase.
     timer = models.IntegerField(blank=True, null=True)
 
     class Meta:

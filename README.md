@@ -3,7 +3,7 @@
 # Python version
 ```
 python --version
-Python 3.8.10
+Python 3.10
 ```
 
 ## Mise en place de virtual env

@@ -4,6 +4,7 @@ from django.http import HttpResponse
 from django.contrib.auth import authenticate, login, logout
 from django.contrib import messages
 from quiz.models import Collaborateur, Superuser
+from django.template import loader
 
 # Create your views here.
 def login_user(request):
@@ -13,17 +14,19 @@ def login_user(request):
         user = authenticate(request, matricule=matricule, password=password)
         if user is not None:
             login(request, user)
-            return redirect('p1')
+            if user.isCollabUser():
+                return redirect('accueilCollab')
+            if user.isSuperUser():
+                return redirect("pa")
         else:
-            messages.success(request, ("There Was An Error Logging In, Try Again..."))
+            messages.success(request, ("Erreur de matricule ou de mot de passe, veuillez ressayer"))
             return redirect('login')
     else:
         return render(request, 'identification/login.html', {})
     
 def logout_user(request):
     logout(request)
-    messages.success(request, ("You Were Logged Out!"))
+    messages.success(request, ("Session deconnectée"))
     return redirect('login')
 
 
-    

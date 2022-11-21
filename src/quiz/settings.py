@@ -15,6 +15,7 @@ from pathlib import Path
 
 import identification
 
+
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -37,13 +38,15 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'appCollab',
+    'identification',
+    'appSuperUser',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'identification',
     'quiz'
 ]
 
@@ -79,16 +82,10 @@ WSGI_APPLICATION = 'quiz.wsgi.application'
 
 
 # Database
+
 AUTH_USER_MODEL="quiz.Personnel"
+
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
-
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 DATABASES = {
     'default': {
@@ -101,6 +98,12 @@ DATABASES = {
     }
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
 
 # Password validation
 # https://docs.djangoproject.com/en/4.1/ref/settings/#auth-password-validators
@@ -150,5 +153,10 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-# LOGIN_REDIRECT_URL = 'identification:p1'
-# LOGOUT_REDIRECT_URL = "identification:quiz"
+
+# LOGIN_REDIRECT_URL = "/"
+
+MEDIA_ROOT = os.path.join(BASE_DIR,'questionnaires')
+
+MEDIA_URL = '/ch/'
+
