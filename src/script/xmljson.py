@@ -1,5 +1,6 @@
 import xmltodict, json
 from os import walk
+import os
 
 def  getListeFichiers(dossier) :
     listeFichiers = []
@@ -19,6 +20,8 @@ def traiterUnFichier(fichierQuizz):
 
 monRepertoire = 'questionnaires/'
 listeFichiers = getListeFichiers(monRepertoire)
+if not os.path.exists('qjsonTemp/'):
+   os.makedirs('qjsonTemp/')
 
 for fich in range(len(listeFichiers)):
     json_data = json.dumps(traiterUnFichier(monRepertoire+listeFichiers[fich]))

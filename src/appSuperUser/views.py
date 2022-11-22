@@ -9,11 +9,100 @@ from os.path import isfile, join
 from pathlib import Path
 from quiz.models import Quizz
 from django.contrib.auth.decorators import login_required
-from quiz.models import Personnel, Collaborateur, Superuser, Secteur
+from quiz.models import Personnel, Collaborateur, Superuser, Secteur, Sessionquizz, Historique
+from django.urls import reverse
+
 
 
 def tbd(request):
-    return render(request,'tbd_sc.html')
+    context={}
+    session=Sessionquizz.objects.all().values()
+    # qq=Sessionquizz.objects.values_list('idquizz',flat=True)
+    # import pdb; pdb.set_trace()
+    # qa=Quizz.objects.get(idquizz=qq)
+    # qz=Quizz.objects.values_list('nomfichier',flat=True)
+    # print(session)
+    context={'session':session}
+    return render(request,'tbd_sc.html', context=context)
+
+def addS(request):
+    context={}
+    session=Sessionquizz.objects.all().values()
+    qz=Quizz.objects.values_list('idquizz',flat=True)
+    # qp=Collaborateur.objects.values_list('matricule_id',flat=True)
+    # print(qp)
+    context={'qz':qz, 'session':session}
+    
+    return render(request,'addsession.html',context)
+
+def addrecord(request):
+    x = request.POST['nquizz']
+    y = request.POST['dateC']
+    z = request.POST['dateE']
+    w = request.POST['timer']
+    e = request.POST['eva']
+    user=request.user
+    session = Sessionquizz(idquizz_id=x, datecreation=y, dateexpiration=z, timer=w, evaluation=e, matricule_id=user.matricule)
+    session.save()
+    # return HttpResponseRedirect(reverse('collab'))
+    return HttpResponseRedirect(reverse('tbd'))
+
+
+def assigner(request,idsession):
+    request.session['idsession']=idsession
+    session=Sessionquizz.objects.get(idsession=idsession)
+    histo=Historique.objects.filter(idsession_id=idsession)
+    qp=Collaborateur.objects.filter(historique__isnull=True).values_list('matricule_id',flat=True)
+    test=Collaborateur.objects.select_related('matricule').values_list('matricule_id',flat=True)
+    t=Historique.objects.select_related('collaborateur').values_list('matricule_id',flat=True)
+    # qc=Personnel.objects.filter(collaborateur__matricule='00').values()
+    print(t)
+    context={'qp':qp,'histo':histo,'session':session}
+    return render(request,'assigner.html',context)
+ 
+def ajouter(request,matricule):
+    idsession=request.session.get("idsession")
+    mat=Collaborateur.objects.get(matricule_id=matricule)
+    histo=Historique(idsession_id=idsession,matricule=mat)
+    histo.save()
+    # context={'session':session}
+    return HttpResponseRedirect(reverse('assigner',kwargs={'idsession':idsession}))
+    
+def deleteS(request, idsession):
+    session= Sessionquizz.objects.get(idsession=idsession)
+    session.delete()
+    return HttpResponseRedirect(reverse('tbd'))
+
+def deleteC(request, idhisto):
+    histo= Historique.objects.get(idhisto=idhisto)
+    idsession=request.session.get("idsession")
+    histo.delete()
+    return HttpResponseRedirect(reverse('assigner',kwargs={'idsession':idsession}))
+
+def modificationS(request, idsession):
+    session=Sessionquizz.objects.get(idsession=idsession)
+    qz=Quizz.objects.values_list('idquizz',flat=True)
+    context = { 'qz':qz,
+        'session':session
+    }
+    return render(request,'modificationSession.html',context)
+
+def updaterecord(request, idsession):
+    x = request.POST['nquizz']
+    y = request.POST['dateC']
+    z = request.POST['dateE']
+    w = request.POST['timer']
+    e = request.POST['eva']
+    user=request.user
+    session=Sessionquizz.objects.get(idsession=idsession)
+    session.idquizz_id=x
+    session.datecreation=y
+    session.dateexpiration=z
+    session.timer=w
+    session.evaluation=e
+    session.matricule_id=user.matricule
+    session.save()
+    return HttpResponseRedirect(reverse('tbd'))
 
 def pa(request):
     return render(request,'page_aut.html')
@@ -49,10 +138,6 @@ def delete(dossier):
             os.unlink(os.path.join(root, f))
         for d in dirs:
             shutil.rmtree(os.path.join(root, d))
-
-
-# def addEmp(request):
-#     return render(request, 'addEmployee.html', {})
 
 def addEmp(request):
     return render(request, 'addEmployee.html', {})

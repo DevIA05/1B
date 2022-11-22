@@ -13,10 +13,10 @@ function edit_row(no) {
     var age_data     = age.innerHTML;
 	var pwd_data     = pwd.innerHTML;
 
-    name.innerHTML    = "<input type='text' id='name_text"    + no + "' value='" + name_data    + "'>";
-    country.innerHTML = "<input type='text' id='country_text" + no + "' value='" + country_data + "'>";
-    age.innerHTML     = "<input type='text' id='age_text"     + no + "' value='" + age_data     + "'>";
-	pwd.innerHTML     = "<input type='text' id='pwd_text"     + no + "' value='" + pwd_data     + "'>";
+    name.innerHTML    = "<input type=text id=name_text"    + no + " value=" + name_data    + ">";
+    country.innerHTML = "<input type=text id=country_text" + no + " value=" + country_data + ">";
+    age.innerHTML     = "<input type=text id=age_text"     + no + " value=" + age_data     + ">";
+	pwd.innerHTML     = "<input type=text id=pwd_text"     + no + " value=" + pwd_data     + ">";
 }
 
 function save_row(no) {
@@ -46,8 +46,20 @@ function add_row() {
 
     var table = document.getElementById("data_table");
     var table_len = (table.rows.length) - 1;
-    var row = table.insertRow(table_len).outerHTML = "<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td id='pwd_row" + table_len + "'>" + new_pwd + "</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")' style='display:none'>  <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
-
+    var row = table.insertRow(table_len).outerHTML = `
+                <tr id="row${table_len}">
+                    <td id="name_row${table_len}">    ${new_name}    </td>
+                    <td id="country_row${table_len}"> ${new_country} </td>
+                    <td id="age_row${table_len}">     ${new_age}     </td>
+                    <td id="pwd_row${table_len}">     ${new_pwd}     </td>
+                    <td id="tdbutton"> <input type="button" id="edit_button${table_len}" value="Edit" class="edit" onclick=edit_row(${table_len})"> 
+                         <input type="button" id="save_button${table_len}" value="Save" class="save" onclick=save_row(${table_len}) style="display:none">  
+                         <input type="button" value="Delete" class="delete" onclick=delete_row(${table_len})>
+                    </td>
+                </tr>
+    `
+    // "<tr id='row"+table_len+"'><td id='name_row"+table_len+"'>"+new_name+"</td><td id='country_row"+table_len+"'>"+new_country+"</td><td id='age_row"+table_len+"'>"+new_age+"</td><td id='pwd_row" + table_len + "'>" + new_pwd + "</td><td><input type='button' id='edit_button"+table_len+"' value='Edit' class='edit' onclick='edit_row("+table_len+")'> <input type='button' id='save_button"+table_len+"' value='Save' class='save' onclick='save_row("+table_len+")' style='display:none'>  <input type='button' value='Delete' class='delete' onclick='delete_row("+table_len+")'></td></tr>";
+    
     document.getElementById("new_name").value    = "";
     document.getElementById("new_country").value = "";
     document.getElementById("new_age").value     = "";

@@ -15,7 +15,7 @@ def login_user(request):
         if user is not None:
             login(request, user)
             if user.isCollabUser():
-                return redirect('pa1')
+                return redirect('accueilCollab')
             if user.isSuperUser():
                 return redirect("pa")
         else:
